@@ -1,6 +1,6 @@
 'use strict'
 
-;(function (jppolAdOps, prebidCache) {
+;(function (jppolAdOps) {
   /**
   * Helper: mergeObject
   * The values in the overwriteObject will always trump the values in baseObject
@@ -23,9 +23,13 @@
     }
   }
 
-  /**
+  /*******
+  ********
+  ********
   * Handle key-values for banners
-  **/
+  ********
+  ********
+  *******/
   var adtechKvAdder = function (str, obj) {
     var split_str = str.split(';')
     var strLength = split_str.length
@@ -70,23 +74,17 @@
   }
 
   function getKeyValues (placement) {
-    console.log('getKeyValues for runner up:', placement, 'prebidCache', prebidCache)
-    var bannerKV = []
-    if (typeof prebidCache[placement] !== 'undefined' && typeof prebidCache[placement].placementKVoldSchool !== 'undefined') {
-      console.log('getKeyValues prebidCache[placement] runner up', prebidCache[placement])
-      bannerKV = adtechKvArr.concat(prebidCache[placement].placementKVoldSchool)
-      console.log('getKeyValues bannerKV after concat', bannerKV)
-      // bannerKV = prebidCache[placement].placementKVoldSchool
-    } else {
-      bannerKV = adtechKvArr
-    }
-    var returnValue = (bannerKV.length > 0) ? bannerKV.join(';') + ';' : ''
+    var returnValue = (adtechKvArr.length > 0) ? adtechKvArr.join(';') + ';' : ''
     return returnValue
   }
 
-  /***********
+  /*******
+  ********
+  ********
   * ACTUAL SAFEFRAME IMPLEMENTATION
-  ***********/
+  ********
+  ********
+  *******/
 
   /**
   * onBeforePosMsg
@@ -266,4 +264,4 @@
       console.error('jppolAdOps.safeframeInit', err)
     }
   }
-}(window.jppolAdOps = window.jppolAdOps || {}, window.prebidCache = window.prebidCache || {}))
+}(window.jppolAdOps = window.jppolAdOps || {}))
