@@ -5,7 +5,6 @@ JPPol shared safeframes implementation
 1. [Host side setup](#host-side)
 2. [Calling banner](#calling-banner)
 
-
 # Host side
 Include jppolhost.min.js in page
 Creates an object called jppolAdOps, with the following exposed elements
@@ -38,7 +37,7 @@ Set the URL of were the safeframe HTML file is placed
 
 setup example
 ```js
-  var sfOptions = {    
+  var sfOptions = {
     safeframeURL: '//ebimg.dk/ux/data/safeframes/index.html'
   }
 ```
@@ -49,14 +48,14 @@ Set the ADTECH network id, can be passed as an object to differentiate between n
 
 String setup example
 ```js
-  var sfOptions = {    
+  var sfOptions = {
     adtechNetworkId: '123'
   }
 ```
 
 Device Object setup example
 ```js
-  var sfOptions = {    
+  var sfOptions = {
     adtechNetworkId: {
       desktop: '123',
       smartphone: '123.0',
@@ -72,14 +71,14 @@ Set the base banner url, from which the final banner script src will be build, c
 
 String setup example
 ```js
-  var sfOptions = {    
+  var sfOptions = {
     baseBannerSrc: '//adserver.adtech.de/addyn/3.0/'
   }
 ```
 
 Device Object setup example
 ```js
-  var sfOptions = {    
+  var sfOptions = {
     adtechNetworkId: {
       desktop: '123',
       smartphone: '123.0',
@@ -96,7 +95,7 @@ Set current device type, used to differentiate adtechNetworkId and baseBannerSrc
 
 Setup example
 ```js
-  var sfOptions = {    
+  var sfOptions = {
     device: 'desktop'
   }
 ```
@@ -119,7 +118,7 @@ var messageObject = {
 
 Init setup example
 ```js
-  var sfOptions = {    
+  var sfOptions = {
     onPosMsg: handleCallBack
   }
 ```
@@ -134,7 +133,7 @@ Should be set to true if wallpaper is an option on the page, usually only for de
 
 example
 ```js
-  var sfOptions = {    
+  var sfOptions = {
     wallpaperHandler: true
   }
 ```
@@ -146,7 +145,7 @@ Can be body or regular CSS selector / ID
 
 example
 ```js
-  var sfOptions = {    
+  var sfOptions = {
     wallpaperSelector: 'adtechWallpaper'
   }
 ```
@@ -158,10 +157,11 @@ Name of positions of which to check for wallpaper.
 
 example
 ```js
-  var sfOptions = {    
+  var sfOptions = {
     wallpaperPositions: ['wallpaper','monster']
   }
 ```
+
 ### allowNuke
 * Optional [boolean]
 * default: true
@@ -170,11 +170,34 @@ If for some reason you wouldn't wan't the banner to collapse if no banner is loa
 
 example
 ```js
-  var sfOptions = {    
+  var sfOptions = {
     allowNuke: true
+  }
+```
+
+### debug
+* Optional [boolean]
+* default: false
+
+For debugging purposes
+
+example
+```js
+  var sfOptions = {
+    debug: false
   }
 ```
 
 # Calling banner
 ## setupFinalPos
 * function
+
+positionData
+
+
+## Passing data to banner
+
+There is two ways to pass data to safeframes, one public and one private.
+
+
+privateDataOptions
