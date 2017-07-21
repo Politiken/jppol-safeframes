@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="Cache-Control" content="public" />
+  <meta http-equiv="Expires" content="Mon, 16 Nov 2020 00:00:01 GMT" />
+  <meta http-equiv="imagetoolbar" content="no" />
+  <meta http-equiv="imagetoolbar" content="false" />
+  <meta name="ROBOTS" content="NOINDEX" />
+  <meta name="ROBOTS" content="NOFOLLOW" />
+  <meta name="ROBOTS" content="NOARCHIVE" />
+  <meta name="ROBOTS" content="NOSNIPPET" />
+  <meta name="ROBOTS" content="NOODP " />
+  <base target="_top" />
+  <title></title>
+  <script type="text/javascript">
+    window.onerror = function() { return true; };
+  </script>
+  <style type="text/css">
+    #sf_body { margin:0px;padding:0px;background-color:transparent; }
+    .sf {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .follow {
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .followleft {
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+    .takeover,
+    .wrapper {
+      height: 100%;
+    }
+    .takeover * {
+      height: 100%;
+    }
+    html, body {
+      font-family: Arial, sans-serif;
+      height: 100%;
+    }
+  </style>
+</head>
+<body id="sf_body">
+    <div style="color: #999;display: none;font-size: 10px;line-height: 15px;margin: 0;text-align: left;" id="adLabel">Safeframe annonce:</div>
+    <div id="adtechWallpaper" class="hidden adtechWallpaper frontpagewallpaper"></div>
+    <div class="wrapper" style="position: relative;">
+  		<div id="sf_align" class="sf">
+  			<script src="http://ebimg.dk/ux/data/safeframe/safeframe-master/src/js/lib/base.js" class="sf"></script>
+  			<script src="http://ebimg.dk/ux/data/safeframe/safeframe-master/src/js/ext/ext.js" class="sf"></script>
+  		</div>
+    </div>
+
+    <script>
+      var position = $sf.ext.meta('banner_position')
+      var sf_align = document.getElementById('sf_align')
+      sf_align.classList.add(position)
+      console.log('safeframe - the call is coming from inside the house', 'position:', position)
+      window.addEventListener('load', function() {
+        try {
+
+          var gotADTECHBanner = (sf_align.querySelector('.adslot') !== null)
+          var endedUpEmpty = (sf_align.querySelector('img[alt="AdTech Ad"]') !== null)
+          console.log('safeframe - the call is coming from inside the house @load ', 'position:', position)
+          if (gotADTECHBanner && !endedUpEmpty) {
+            console.log('safeframe - the call is coming from inside the house', 'we got a banner', position)
+            if (position === 'monster' || position === 'wallpaper') {
+              var adtechWallpaper = document.getElementById('adtechWallpaper')
+              var stylingAttr = adtechWallpaper.getAttribute('style')
+              if (stylingAttr !== null && stylingAttr.match(/url\((.*?)\)/)) {
+                $sf.ext.message('styling:' + stylingAttr)
+                console.log('safeframe - the call is coming from inside the house', 'dis got wallpaper', position, stylingAttr.match(/url\((.*?)\)/))
+              }
+            }
+
+            if (position.indexOf('follow') !== -1) {
+              console.log('safeframe - the call is coming from inside the house', 'then send the goddamn message bitch')
+              $sf.ext.message('loaded a follow banner')
+              console.log('safeframe - the call is coming from inside the house', 'then send the goddamn message bitch')
+            }
+
+            console.log('safeframe - the call is coming from inside the house', '$sf.ext.meta("banner_label")', $sf.ext.meta("banner_label"), position)
+            if ($sf.ext.meta('banner_label') === 'true') {
+              document.getElementById('adLabel').style.display = 'block'
+            }
+            console.log('safeframe - the call is coming from inside the house', '$sf.ext.meta("content_id")', $sf.ext.meta("content_id"), position)
+            // console.log('safeframe - the call is coming from inside the house', '$sf.ext - private', $sf.ext.meta("section_id", "sfEB"))
+          } else {
+            console.log('safeframe - the call is coming from inside the house', 'collapse in on thyself', position)
+            $sf.ext.message('nuke')
+          }
+        } catch (err) {
+          console.error('safeframe - the call is coming from inside the house', 'error', err);
+        }
+      })
+    </script>
+</body>
+</html>

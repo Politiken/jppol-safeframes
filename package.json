@@ -1,0 +1,26 @@
+{
+  "name": "sharedsafeframes",
+  "version": "0.0.1",
+  "description": "JPPol shared safeframes implementation",
+  "main": "index.js",
+  "dependencies": {
+    "safeframe": "^1.1.3"
+  },
+  "devDependencies": {
+    "uglify-js": "^3.0.24"
+  },
+  "scripts": {
+    "dist": "npm run host && npm run ext",
+    "host": "uglifyjs \"node_modules/safeframe/src/js/lib/base.js\" \"node_modules/safeframe/src/js/host/host.js\" \"node_modules/safeframe/src/js/lib/boot.js\" \"host/jppolhost.js\" -o \"host/jppolhost.min.js\" -c -m"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EkstraBladetUdvikling/sharedsafeframes.git"
+  },
+  "author": "tegner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EkstraBladetUdvikling/sharedsafeframes/issues"
+  },
+  "homepage": "https://github.com/EkstraBladetUdvikling/sharedsafeframes#readme"
+}
