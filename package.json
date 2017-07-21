@@ -11,7 +11,9 @@
   },
   "scripts": {
     "dist": "npm run host && npm run ext",
-    "host": "uglifyjs \"node_modules/safeframe/src/js/lib/base.js\" \"node_modules/safeframe/src/js/host/host.js\" \"node_modules/safeframe/src/js/lib/boot.js\" \"host/jppolhost.js\" -o \"host/jppolhost.min.js\" -c -m"
+    "host": "uglifyjs \"sf_api/src/js/lib/base.js\" \"sf_api/src/js/host/host.js\" \"sf_api/src/js/lib/boot.js\" \"host/jppolhost.js\" -o \"host/jppolhost.min.js\" -c -m",
+    "ext": "uglifyjs \"sf_api/src/js/lib/base.js\" \"sf_api/src/js/ext/ext.js\" \"ext/jppolhost.js\" -o \"ext/jppolhost.min.js\" -c -m",
+    "hostnpm": "uglifyjs \"node_modules/safeframe/src/js/lib/base.js\" \"node_modules/safeframe/src/js/host/host.js\" \"node_modules/safeframe/src/js/lib/boot.js\" \"host/jppolhost.js\" -o \"host/jppolhost.min.js\" -c -m"
   },
   "repository": {
     "type": "git",
