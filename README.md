@@ -192,12 +192,86 @@ example
 ## setupFinalPos
 * function
 
+Takes an object with all the data needed to create the correct banner
+
 positionData
 
+```js
+var positionData = {
+  placement: positionID,
+  prefixit: '${ prefixit }',
+  // waitForPrebid: '${ shouldRunPrebid }', // TODO: PREBID
+  waitForPrebid: 'false',
+  type: type,
+  sfPos: sfPos,
+  shared_data: {
+    elementPos: document.getElementById(destID).getBoundingClientRect()
+  }
+}
+```
+
+### placement
+* Mandatory [string]
+
+placement id / name for banner
+
+
+```js
+var positionData = {
+  placement: 'monster'
+}
+```
+
+### bannerID
+* Mandatory
+
+ADTECH placement ID or alias for banner
+
+```js
+var positionData = {
+  bannerID: '6010292'
+}
+```
+
+### type
+* Mandatory [string]
+
+ADTECH placement type / sizeid
+
+```js
+var positionData = {
+  type: '277'
+}
+```
+
+### destID
+* Mandatory [string]
+
+ID of element to serve banner in
+
+```js
+var positionData = {
+  destID: 'monster_trgt'
+}
+```
+
+
+
+### prefixit
+* Optional [string]
+
+placement ID or alias for banner
+
+
+destID: destID,
+type: type,
+sfPos: sfPos,
+shared_data: {
+  elementPos: document.getElementById(destID).getBoundingClientRect()
+}
 
 ## Passing data to banner
 
 There is two ways to pass data to safeframes, one public and one private.
-
 
 privateDataOptions

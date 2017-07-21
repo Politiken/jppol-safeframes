@@ -173,7 +173,7 @@
       * Setup data sharing
       **/
       var shared_data_defaults = {
-        banner_position: positionData.id,
+        banner_position: positionData.placement,
         banner_label: positionData.prefixit,
         content_id: positionData.bannerID
       }
@@ -192,9 +192,9 @@
       var posMeta = new $sf.host.PosMeta(shared_data, private_data_key, private_data)
 
       debug.log('sharedsafeframes', 'safeframe', 'setupFinalPos', positionData)
-      if (typeof positionData.id !== 'undefined') {
+      if (typeof positionData.placement !== 'undefined') {
         var posConf = new $sf.host.PosConfig({
-          id:	positionData.id, // position ID
+          id:	positionData.placement, // position ID
           dest: positionData.destID, // ID of element in parent page
           tgt: '_blank',
           w: positionData.sfPos.sfWidth, // width of iframe
@@ -202,9 +202,9 @@
           z: positionData.sfPos.zIndex
         })
 
-        var keyValueString = getKeyValues(positionData.id)
+        var keyValueString = getKeyValues(positionData.placement)
 
-        debug.log('sharedsafeframes', 'safeframe', 'so kv for:', positionData.id, 'is', keyValueString, 'and type is', positionData.type)
+        debug.log('sharedsafeframes', 'safeframe', 'so kv for:', positionData.placement, 'is', keyValueString, 'and type is', positionData.type)
         var bannerID = positionData.bannerID
         var aliasString = ''
         var type = positionData.type
@@ -216,9 +216,9 @@
         var baseBannerSrc = (typeof sfOptions.baseBannerSrc === 'object') ? sfOptions.baseBannerSrc[sfOptions.device] : sfOptions.baseBannerSrc
         var networkId = (typeof sfOptions.adtechNetworkId === 'object') ? sfOptions.adtechNetworkId[sfOptions.device] : sfOptions.adtechNetworkId
         var bannerSrc = baseBannerSrc + networkId + '/' + bannerID + '/0/' + type + '/ADTECH;loc=100;' + aliasString + 'target=_blank;key=key1+key2+key3+key4;' + keyValueString + 'grp=[group];misc=' + new Date().getTime()
-        debug.log('sharedsafeframes', 'safeframe', 'so bannerSrc for:', positionData.id, 'is', bannerSrc, 'with conf', posConf, 'and meta', posMeta, positionData)
+        debug.log('sharedsafeframes', 'safeframe', 'so bannerSrc for:', positionData.placement, 'is', bannerSrc, 'with conf', posConf, 'and meta', posMeta, positionData)
         var pos = new $sf.host.Position({
-          id: positionData.id,
+          id: positionData.placement,
           src: bannerSrc,
           conf: posConf,
           meta: posMeta
