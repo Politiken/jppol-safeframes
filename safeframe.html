@@ -75,14 +75,14 @@
               console.log('inside safeframe', 'dis got wallpaper', position)
             }
 
-            if (position.indexOf('follow') !== -1) {
-              $sf.ext.message('loaded a follow banner')
-            }
+            // if (position.indexOf('follow') !== -1) {
+            //   $sf.ext.message('loaded a follow banner')
+            // }
             // if ($sf.ext.meta('banner_label') === 'true') {
             //   document.getElementById('adLabel').style.display = 'block'
             // }
 
-            $sf.ext.message('safeframeloaded:', position)
+            $sf.ext.message('safeframeloaded:' + position)
 
             console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("content_id"), position)
             console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("banner_label"), position)
