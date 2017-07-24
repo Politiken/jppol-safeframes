@@ -198,12 +198,13 @@ positionData
 
 ```js
 var positionData = {
-  placement: positionID,
-  prefixit: '${ prefixit }',
-  // waitForPrebid: '${ shouldRunPrebid }', // TODO: PREBID
-  waitForPrebid: 'false',
-  type: type,
-  sfPos: sfPos,
+  placement: 'monster',
+  bannerID: '4040617',
+  type: '277',
+  sfWidth: 930,
+  sfHeight: 180,
+  sfZIndex: 1,
+  prefixit: 'false',
   shared_data: {
     elementPos: document.getElementById(destID).getBoundingClientRect()
   }
@@ -229,7 +230,7 @@ ADTECH placement ID or alias for banner
 
 ```js
 var positionData = {
-  bannerID: '6010292'
+  bannerID: '4040617'
 }
 ```
 
@@ -255,20 +256,29 @@ var positionData = {
 }
 ```
 
+### Dimensions
+* Mandatory [number]
 
+Sets the width, height and z-index of the safeframe
+
+```js
+var positionData = {
+  sfWidth: 930,
+  sfHeight: 180,
+  sfZIndex: 1
+}
+```
 
 ### prefixit
 * Optional [string]
 
-placement ID or alias for banner
+Set if the safeframe should add "Annonce: " on top of the banner
 
-
-destID: destID,
-type: type,
-sfPos: sfPos,
-shared_data: {
-  elementPos: document.getElementById(destID).getBoundingClientRect()
+```js
+var positionData = {
+  prefixit: 'false'
 }
+```
 
 ## Passing data to banner
 

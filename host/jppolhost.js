@@ -100,7 +100,9 @@
   * A callback function that gets fired before any cancellable action is requested to be peformed from a a SafeFrame, such as expansion, etc. Return true out of this callback function to cancel/disallow the action in question.
   * NOTE: Seems this is never called
   **/
-  function beforePosMsg (posID) { }
+  function beforePosMsg (posID) {
+    console.log('sharedsafeframes', 'beforePosMsg', 'is this coming through?', posID)
+  }
 
   /**
   * onPosMsg
@@ -197,9 +199,9 @@
           id:	positionData.placement, // position ID
           dest: positionData.destID, // ID of element in parent page
           tgt: '_blank',
-          w: positionData.sfPos.sfWidth, // width of iframe
-          h: positionData.sfPos.sfHeight, // height of iframe
-          z: positionData.sfPos.zIndex
+          w: positionData.sfWidth, // width of iframe
+          h: positionData.sfHeight, // height of iframe
+          z: positionData.sfZIndex
         })
 
         var keyValueString = getKeyValues(positionData.placement)

@@ -16,6 +16,10 @@
     window.onerror = function() { return true; };
   </script>
   <style type="text/css">
+    html, body {
+      font-family: Arial, sans-serif;
+      height: 100%;
+    }
     #sf_body { margin:0px;padding:0px;background-color:transparent; }
     .sf {
       display: flex;
@@ -37,19 +41,15 @@
     .takeover * {
       height: 100%;
     }
-    html, body {
-      font-family: Arial, sans-serif;
-      height: 100%;
-    }
   </style>
 </head>
 <body id="sf_body">
-    <div style="color: #999;display: none;font-size: 10px;line-height: 15px;margin: 0;text-align: left;" id="adLabel">Safeframe annonce:</div>
+    <!-- <div style="color: #999;display: none;font-size: 10px;line-height: 15px;margin: 0;text-align: left;" id="adLabel">Safeframe annonce:</div> -->
     <div id="adtechWallpaper" class="hidden adtechWallpaper frontpagewallpaper"></div>
     <div class="wrapper" style="position: relative;">
   		<div id="sf_align" class="sf">
-  			<script src="//ebimg.dk/ux/data/safeframe/safeframe-master/src/js/lib/base.js" class="sf"></script>
-  			<script src="//ebimg.dk/ux/data/safeframe/safeframe-master/src/js/ext/ext.js" class="sf"></script>
+  			<script src="sf_api/src/js/lib/base.js" class="sf"></script>
+  			<script src="sf_api/src/js/ext/ext.js" class="sf"></script>
   		</div>
     </div>
     <script>
@@ -78,9 +78,12 @@
             if (position.indexOf('follow') !== -1) {
               $sf.ext.message('loaded a follow banner')
             }
-            if ($sf.ext.meta('banner_label') === 'true') {
-              document.getElementById('adLabel').style.display = 'block'
-            }
+            // if ($sf.ext.meta('banner_label') === 'true') {
+            //   document.getElementById('adLabel').style.display = 'block'
+            // }
+
+            $sf.ext.message('safeframeloaded:', position)
+
             console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("content_id"), position)
             console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("banner_label"), position)
             console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("elementPos"), position)
