@@ -2,8 +2,13 @@
 JPPol shared safeframes implementation
 
 # Table of Contents
+1. [Safeframe side setup](#safeframe-side)
 1. [Host side setup](#host-side)
 2. [Calling banner](#calling-banner)
+
+# Safeframe side
+Upload the safeframe folder of this project to an external address
+eg. //ebimg.dk/ux/data/safeframes/
 
 # Host side
 Include jppolhost.min.js in page
@@ -22,7 +27,7 @@ The initialize function takes an object as argument, with [safeframeURL](#safefr
 Initialize function
 ``` js
   var sfOptions = {
-    safeframeURL: '//ebimg.dk/ux/data/safeframes/index.html',
+    safeframeURL: '//ebimg.dk/ux/data/safeframes/index.html', // [Path from setup](#safeframe-side)
     adtechNetworkId: '123'
   }
   jppolAdOps.safeframeInit(sfOptions)
@@ -38,7 +43,7 @@ Set the URL of were the safeframe HTML file is placed
 setup example
 ```js
   var sfOptions = {
-    safeframeURL: '//ebimg.dk/ux/data/safeframes/index.html'
+    safeframeURL: '//ebimg.dk/ux/data/safeframes/index.html' // [Path from setup](#safeframe-side)
   }
 ```
 
@@ -86,7 +91,6 @@ Device Object setup example
     }
   }
 ```
-
 
 ### device
 * Optional [string]
@@ -188,7 +192,10 @@ example
   }
 ```
 
-# Calling banner
+# Calling a banner
+
+To call a specific banner call [setupFinalPos](#setupFinalPos) with position data
+
 ## setupFinalPos
 * function
 
@@ -224,7 +231,7 @@ var positionData = {
 ```
 
 ### bannerID
-* Mandatory
+* Mandatory [string]
 
 ADTECH placement ID or alias for banner
 
@@ -258,8 +265,11 @@ var positionData = {
 
 ### Dimensions
 * Mandatory [number]
+* sfWidth [number]
+* sfHeight [number]
+* sfZIndex [number]
 
-Sets the width, height and z-index of the safeframe
+Set the width, height and z-index of the safeframe
 
 ```js
 var positionData = {
@@ -269,19 +279,42 @@ var positionData = {
 }
 ```
 
-### prefixit
-* Optional [string]
+### keyValues
+* optional [array]
 
-Set if the safeframe should add "Annonce: " on top of the banner
+Key values to be added to banner called besides criteo, bluekai and rubicon key values
+Could be prebid key values
 
 ```js
 var positionData = {
-  prefixit: 'false'
+  keyValues: ['prebidwhatever=1']
 }
 ```
 
-## Passing data to banner
+### shared_data
+* Optional [object]
 
-There is two ways to pass data to safeframes, one public and one private.
+Pass shared data to the safeframe, this data is open to every banner to use
 
-privateDataOptions
+```js
+var positionData = {
+  shared_data: {
+    elementPos_top: document.getElementById(destID).getBoundingClientRect().top
+  }
+}
+```
+
+## Passing private data to banner
+
+### privateDataOptions
+* Optional [object]
+
+```js
+var privateDataOptions = {
+  key: 'privateKeyForSF',
+  private_data1: 'Private data',
+  private_data2: {
+    more_data: 'More private data'
+  }
+}
+```

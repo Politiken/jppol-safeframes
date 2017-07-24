@@ -82,8 +82,9 @@
     adtechKvArr.push('kv' + key + '=' + adtechKv[key])
   }
 
-  function getKeyValues (placement) {
-    var returnValue = (adtechKvArr.length > 0) ? adtechKvArr.join(';') + ';' : ''
+  function getKeyValues (placementKv) {
+    var kvArray = (typeof placementKv !== 'undefined') ? adtechKvArr.concat(placementKv) : adtechKvArr
+    var returnValue = (kvArray.length > 0) ? kvArray.join(';') + ';' : ''
     return returnValue
   }
 
@@ -204,7 +205,7 @@
           z: positionData.sfZIndex
         })
 
-        var keyValueString = getKeyValues(positionData.placement)
+        var keyValueString = getKeyValues(positionData.keyValues)
 
         debug.log('sharedsafeframes', 'safeframe', 'so kv for:', positionData.placement, 'is', keyValueString, 'and type is', positionData.type)
         var bannerID = positionData.bannerID
