@@ -48,8 +48,7 @@
     <div id="adtechWallpaper" class="hidden adtechWallpaper frontpagewallpaper"></div>
     <div class="wrapper" style="position: relative;">
   		<div id="sf_align" class="sf">
-  			<script src="sf_api/src/js/lib/base.js" class="sf"></script>
-  			<script src="sf_api/src/js/ext/ext.js" class="sf"></script>
+  			<script src="ext.min.js" class="sf"></script>
   		</div>
     </div>
     <script>
@@ -72,15 +71,8 @@
               } else if (stylingAttrBody !== null && stylingAttrBody.match(/url\((.*?)\)/)) {
                 $sf.ext.message('styling:' + stylingAttrBody)
               }
-              console.log('inside safeframe', 'dis got wallpaper', position)
+              console.log('inside safeframe', 'dis got wallpaper', position, stylingAttrCustom, stylingAttrBody)
             }
-
-            // if (position.indexOf('follow') !== -1) {
-            //   $sf.ext.message('loaded a follow banner')
-            // }
-            // if ($sf.ext.meta('banner_label') === 'true') {
-            //   document.getElementById('adLabel').style.display = 'block'
-            // }
 
             $sf.ext.message('safeframeloaded:' + position)
 

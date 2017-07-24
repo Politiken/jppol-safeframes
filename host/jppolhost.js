@@ -120,7 +120,7 @@
       }
       debug.log('sharedsafeframes', 'safeframe wallpaper', (sfOptions.wallpaperHandler && typeof sfOptions.wallpaperSelector !== 'undefined'))
       if (sfOptions.wallpaperHandler && typeof sfOptions.wallpaperSelector !== 'undefined') {
-        if (nuked === false && type === 'msg' && sfOptions.wallpaperPositionsString.indexOf(posID) !== -1) { // (posID === 'monster' || posID === 'wallpaper')) {
+        if (nuked === false && type === 'msg' && sfOptions.wallpaperPositionsString.indexOf(posID) !== -1 && content.indexOf('styling:') !== -1) { // (posID === 'monster' || posID === 'wallpaper')) {
           var bgCSS = content.split('styling:')[1]
           var wpEl = null
           if (sfOptions.wallpaperSelector === 'body') {

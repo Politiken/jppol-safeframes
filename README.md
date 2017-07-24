@@ -49,6 +49,7 @@ setup example
 
 ### adtechNetworkId
 * Mandatory [string / object]
+
 Set the ADTECH network id, can be passed as an object to differentiate between network ids based on [device type](#device)
 
 String setup example
@@ -72,6 +73,7 @@ Device Object setup example
 ### baseBannerSrc
 * Optional [string / object]
 * default: '//adserver.adtech.de/addyn/3.0/'
+
 Set the base banner url, from which the final banner script src will be build, can be passed as an object to differentiate between network ids based on [device type](#device)
 
 String setup example
@@ -95,6 +97,7 @@ Device Object setup example
 ### device
 * Optional [string]
 * default: 'desktop'
+
 Set current device type, used to differentiate adtechNetworkId and baseBannerSrc
 
 Setup example
@@ -106,6 +109,7 @@ Setup example
 
 ### messageCallback
 * Optional [function]
+
 Set the function which should be called when the safeframe is triggering onPosMsg
 
 An object[example shown below] is passed as argument to the callback function containing 4
@@ -211,7 +215,6 @@ var positionData = {
   sfWidth: 930,
   sfHeight: 180,
   sfZIndex: 1,
-  prefixit: 'false',
   shared_data: {
     elementPos: document.getElementById(destID).getBoundingClientRect()
   }
