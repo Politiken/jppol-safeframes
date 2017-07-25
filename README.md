@@ -1,6 +1,8 @@
 # sharedsafeframes
 JPPol shared safeframes implementation
 
+Based on https://github.com/InteractiveAdvertisingBureau/safeframe
+
 # Table of Contents
 1. [Safeframe side setup](#safeframe-side)
 2. [Host side setup](#host-side)
@@ -176,7 +178,7 @@ example
 * Optional [boolean]
 * default: true
 
-If for some reason you wouldn't wan't the banner to collapse if no banner is loaded
+Mainly for debugging purposes
 
 example
 ```js
@@ -187,7 +189,7 @@ example
 
 ### debug
 * Optional [boolean]
-* default: false
+* default: false (will be set to true, if fulldebug is true)
 
 For debugging purposes
 
@@ -195,6 +197,20 @@ example
 ```js
   var sfOptions = {
     debug: false
+  }
+```
+
+### fulldebug
+* Optional [boolean]
+* default: false
+
+For debugging purposes
+BEWARE: This will add debug information directly into the banner container
+
+example
+```js
+  var sfOptions = {
+    fulldebug: false
   }
 ```
 

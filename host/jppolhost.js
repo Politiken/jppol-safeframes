@@ -113,6 +113,9 @@
     try {
       debug.log('sharedsafeframes', 'safeframe posMsg', posID, type, content)
       var nuked = false
+      if (content === 'nuke' && sfOptions.fulldebug) {
+        document.getElementById(posID + '_container').appendChild(document.createTextNode('$sf.host.nuke(' + posID + ')  - nuke allowed:' + sfOptions.allowNuke))
+      }
       if (content === 'nuke' && sfOptions.allowNuke) { // || type === 'error') { // TODO: we should handle errors somehow
         debug.log('sharedsafeframes', 'safeframe posMsg nuke el:', posID)
         $sf.host.nuke(posID)
@@ -259,7 +262,8 @@
     'wallpaperSelector': 'adtechWallpaper',
     'wallpaperPositions': ['monster', 'wallpaper'],
     'allowNuke': true,
-    'debug': false
+    'debug': false, // reset in init function if fulldebug is set to true
+    'fulldebug': false
   }
 
   jppolAdOps.safeframeInit = function (options, privateDataOptions) {
@@ -267,6 +271,7 @@
       sfOptions = mergeObject(sfDefaults, options)
       sfDataPrivate = (typeof privateDataOptions !== 'undefined') ? mergeObject(sfDataPrivateDefaults, privateDataOptions) : sfDataPrivateDefaults
       sfOptions.wallpaperPositionsString = (typeof sfOptions.wallpaperPositions === 'string') ? sfOptions.wallpaperPositions : sfOptions.wallpaperPositions.join(',')
+      sfOptions.debug = sfOptions.fulldebug || sfOptions.debug
       debug.setup(sfOptions.debug)
       debug.log('sharedsafeframes', 'setting up safeframes with', options, privateDataOptions)
       /**
