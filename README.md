@@ -3,8 +3,9 @@ JPPol shared safeframes implementation
 
 # Table of Contents
 1. [Safeframe side setup](#safeframe-side)
-1. [Host side setup](#host-side)
-2. [Calling banner](#calling-banner)
+2. [Host side setup](#host-side)
+3. [Calling banner](#calling-banner)
+4. [Special formats - Callbacks](#callbacks)
 
 # Safeframe side
 Upload the safeframe folder of this project to an external address
@@ -110,8 +111,9 @@ Setup example
 ### messageCallback
 * Optional [function]
 
-Set the function which should be called when the safeframe is triggering onPosMsg
+See also: [Callbacks](#callbacks)
 
+Set the function which should be called when the safeframe is triggering onPosMsg
 An object[example shown below] is passed as argument to the callback function containing 4
 
 Argument example
@@ -119,7 +121,7 @@ Argument example
 var messageObject = {
   'placement': 'string', // string
   'type': 'string', // ['msg'/'error']
-  'content': 'string', //
+  'content': 'string', // safeframes doesnt support other types at the moment
   'nuked': nuked
 }
 ```
@@ -321,3 +323,13 @@ var privateDataOptions = {
   }
 }
 ```
+
+# Callbacks
+
+Handling special banner formats, like wallpaper, skyskraper(follow) etc.
+
+At the moment safeframes only support strings to be sent from inside the safeframe
+
+## load
+
+When the banner is loaded the safeframe sends the a message with the content "safeframeloaded:" + position
