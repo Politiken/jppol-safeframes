@@ -46,14 +46,15 @@
 <body id="sf_body">
     <!-- <div style="color: #999;display: none;font-size: 10px;line-height: 15px;margin: 0;text-align: left;" id="adLabel">Safeframe annonce:</div> -->
     <div id="adtechWallpaper" class="hidden adtechWallpaper frontpagewallpaper"></div>
-    <div class="wrapper" style="position: relative;">
-  		<div id="sf_align" class="sf">
-  			<script src="ext.min.js" class="sf"></script>
-  		</div>
-    </div>
+
+      <div class="wrapper" id="sfWrapper" style="position: relative;">
+    		<div id="sf_align" class="sf">
+    			<script src="ext.min.js" class="sf"></script>
+    		</div>
+      </div>
     <script>
       var position = $sf.ext.meta('banner_position')
-      var sf_align = document.getElementById('sf_align')
+      var sf_align = document.getElementById('sfWrapper')
       sf_align.classList.add(position)
       console.log('inside inside safeframe', 'position:', position)
       window.addEventListener('load', function() {
@@ -73,8 +74,14 @@
               }
               console.log('inside safeframe', 'dis got wallpaper', position, stylingAttrCustom, stylingAttrBody)
             }
-
-            $sf.ext.message('safeframeloaded:' + position)
+            var actualBanner222 = document.getElementById('sf_align')
+            var actualBanner = actualBanner222.querySelector('div')
+            var w = actualBanner.getBoundingClientRect().width
+            var w2 = actualBanner.clientWidth
+            var h = actualBanner.getBoundingClientRect().height
+            var h2 = actualBanner.clientHeight
+            console.log('safeframeloaded data:','w:',w, w2, 'h:', h, h2)
+            $sf.ext.message('safeframeloaded:' + position + '|' + w + '|' + h)
 
             console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("content_id"), position)
             console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("banner_label"), position)
