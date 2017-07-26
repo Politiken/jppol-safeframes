@@ -74,12 +74,18 @@
               }
               console.log('inside safeframe', 'dis got wallpaper', position, stylingAttrCustom, stylingAttrBody)
             }
+            var loadedMessage = 'safeframeloaded'
+            if (sf_align.querySelector('.prebidPlaceholder') !== null) {
+              loadedMessage += '|prebid'
+            } else if (sf_align.querySelector('.prebidPlaceholder_xhb') !== null) {
+              loadedMessage += '|prebid_xhb'
+            }
 
-            $sf.ext.message('safeframeloaded:' + position)
+            $sf.ext.message(loadedMessage)
 
-            console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("content_id"), position)
-            console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("banner_label"), position)
-            console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("elementPos"), position)
+            // console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("content_id"), position)
+            // console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("banner_label"), position)
+            // console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("elementPos"), position)
           } else {
             console.log('inside safeframe', position, ' will be nuked')
             $sf.ext.message('nuke')

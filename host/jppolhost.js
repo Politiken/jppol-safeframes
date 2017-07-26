@@ -83,6 +83,11 @@
   }
 
   function getKeyValues (placementKv) {
+    if (typeof placementKv !== 'undefined') {
+      for (var i = placementKv.length; i--;) {
+        placementKv[i] = 'kv' + placementKv[i]
+      }
+    }
     var kvArray = (typeof placementKv !== 'undefined') ? adtechKvArr.concat(placementKv) : adtechKvArr
     var returnValue = (kvArray.length > 0) ? kvArray.join(';') + ';' : ''
     return returnValue

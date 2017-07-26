@@ -348,4 +348,4 @@ At the moment safeframes only support strings to be sent from inside the safefra
 
 ## load
 
-When the banner is loaded the safeframe sends the a message with the content "safeframeloaded:" + position
+When the banner is loaded the safeframe sends the a message with the content "safeframeloaded"
