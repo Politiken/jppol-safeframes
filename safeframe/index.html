@@ -56,7 +56,7 @@
       var position = $sf.ext.meta('banner_position')
       var sf_align = document.getElementById('sf_align')
       sf_align.classList.add(position)
-      console.log('inside inside safeframe', 'position:', position)
+      console.log('inside inside safeframe', 'position:', position, 'sf_align:', sf_align.clientHeight)
       window.addEventListener('load', function() {
         try {
           var gotADTECHBanner = (sf_align.querySelector('.adslot') !== null)
@@ -79,6 +79,8 @@
               loadedMessage += '|prebid'
             } else if (sf_align.querySelector('.prebidPlaceholder_xhb') !== null) {
               loadedMessage += '|prebid_xhb'
+            } else {
+              loadedMessage += '|w' + sf_align.clientWidth + '|h' + sf_align.clientHeight
             }
 
             $sf.ext.message(loadedMessage)
