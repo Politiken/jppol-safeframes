@@ -36,6 +36,10 @@ Initialize function
   jppolAdOps.safeframeInit(sfOptions)
 ```
 
+### debug info from safeframe
+
+[Se debug](#debug)
+
 ## Options
 
 ### safeframeURL
@@ -192,13 +196,20 @@ example
 * default: false (will be set to true, if fulldebug is true)
 
 For debugging purposes
+Log statements from jppol-safeframes is prefixed with jppol-safeframes, followed by either filename or "inside safeframe"
 
-example
+setup example
 ```js
   var sfOptions = {
     debug: false
   }
 ```
+
+output example
+```js
+  jppol-safeframes: jppolhost.js safeframe posMsg followleft msg safeframeloaded|w160|h604
+```
+
 
 ### fulldebug
 * Optional [boolean]
@@ -213,6 +224,8 @@ example
     fulldebug: false
   }
 ```
+
+
 
 # Calling a banner
 

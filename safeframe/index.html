@@ -21,13 +21,14 @@
       height: 100%;
     }
     #sf_body { margin:0px;padding:0px;background-color:transparent; }
+    .wrapper,
     .sf {
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .follow {
-      align-items: flex-start;
+      align-self: flex-start;
       justify-content: flex-start;
     }
     .followleft {
@@ -49,53 +50,60 @@
 
       <div class="wrapper" id="sfWrapper" style="position: relative;">
     		<div id="sf_align" class="sf">
-    			<script src="ext.min.js" class="sf"></script>
+    			<script src="ext.min.js?v=1" class="sf"></script>
     		</div>
       </div>
     <script>
-      var position = $sf.ext.meta('banner_position')
-      var sf_align = document.getElementById('sf_align')
-      sf_align.classList.add(position)
-      console.log('inside inside safeframe', 'position:', position, 'sf_align:', sf_align.clientHeight)
-      window.addEventListener('load', function() {
+      ;(function (jppolAdOps) {
         try {
-          var gotADTECHBanner = (sf_align.querySelector('.adslot') !== null)
-          var endedUpEmpty = (sf_align.querySelector('img[alt="AdTech Ad"]') !== null)
-          console.log('inside safeframe @load ', 'position:', position)
-          if (gotADTECHBanner && !endedUpEmpty) {
-            console.log('inside safeframe', 'we got a banner', position)
-            if (position === 'monster' || position === 'wallpaper') {
-              var stylingAttrCustom = document.getElementById('adtechWallpaper').getAttribute('style')
-              var stylingAttrBody = document.body.getAttribute('style')
-              if (stylingAttrCustom !== null && stylingAttrCustom.match(/url\((.*?)\)/)) {
-                $sf.ext.message('styling:' + stylingAttrCustom)
-              } else if (stylingAttrBody !== null && stylingAttrBody.match(/url\((.*?)\)/)) {
-                $sf.ext.message('styling:' + stylingAttrBody)
+          var debug = jppolAdOps.debug
+          debug.setup(location.href.indexOf('debug=true') !== -1)
+
+          var position = $sf.ext.meta('banner_position')
+          var sf_align = document.getElementById('sf_align')
+          sf_align.classList.add(position)
+          sf_align.parentNode.classList.add(position)
+          debug.log('safeframes: inside safeframe', 'position:', position)
+          window.addEventListener('load', function () {
+            try {
+              var gotADTECHBanner = (sf_align.querySelector('.adslot') !== null)
+              var endedUpEmpty = (sf_align.querySelector('img[alt="AdTech Ad"]') !== null)
+              debug.log('safeframes: inside safeframe', '@load position:', position)
+              if (gotADTECHBanner && !endedUpEmpty) {
+                debug.log('safeframes: inside safeframe', 'we got a banner', position)
+                if (position === 'monster' || position === 'wallpaper') {
+                  var stylingAttrCustom = document.getElementById('adtechWallpaper').getAttribute('style')
+                  var stylingAttrBody = document.body.getAttribute('style')
+                  if (stylingAttrCustom !== null && stylingAttrCustom.match(/url\((.*?)\)/)) {
+                    $sf.ext.message('styling:' + stylingAttrCustom)
+                  } else if (stylingAttrBody !== null && stylingAttrBody.match(/url\((.*?)\)/)) {
+                    $sf.ext.message('styling:' + stylingAttrBody)
+                  }
+                  debug.log('safeframes: inside safeframe', 'got wallpaper from', position, stylingAttrCustom, stylingAttrBody)
+                }
+                var loadedMessage = 'safeframeloaded'
+                if (sf_align.querySelector('.prebidPlaceholder') !== null) {
+                  loadedMessage += '|prebid'
+                } else if (sf_align.querySelector('.prebidPlaceholder_xhb') !== null) {
+                  loadedMessage += '|prebid_xhb'
+                } else {
+                  loadedMessage += '|w' + sf_align.clientWidth + '|h' + sf_align.clientHeight
+                }
+
+                $sf.ext.message(loadedMessage)
+
+              } else {
+                debug.log('safeframes: inside safeframe', position, ' will be nuked')
+                $sf.ext.message('nuke')
               }
-              console.log('inside safeframe', 'dis got wallpaper', position, stylingAttrCustom, stylingAttrBody)
+            } catch (err) {
+              debug.error('safeframes: inside safeframe', 'error', err)
             }
-            var loadedMessage = 'safeframeloaded'
-            if (sf_align.querySelector('.prebidPlaceholder') !== null) {
-              loadedMessage += '|prebid'
-            } else if (sf_align.querySelector('.prebidPlaceholder_xhb') !== null) {
-              loadedMessage += '|prebid_xhb'
-            } else {
-              loadedMessage += '|w' + sf_align.clientWidth + '|h' + sf_align.clientHeight
-            }
-
-            $sf.ext.message(loadedMessage)
-
-            // console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("content_id"), position)
-            // console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("banner_label"), position)
-            // console.log('inside safeframe', '$sf.ext.meta("content_id")', $sf.ext.meta("elementPos"), position)
-          } else {
-            console.log('inside safeframe', position, ' will be nuked')
-            $sf.ext.message('nuke')
-          }
+          })
         } catch (err) {
-          console.error('inside safeframe', 'error', err);
+          debug.error('safeframes: inside safeframe', err)
         }
-      })
+      }(window.jppolAdOps = window.jppolAdOps || {}))
     </script>
 </body>
 </html>

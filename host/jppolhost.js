@@ -5,11 +5,7 @@
   * Helper: debug
   * Wrapping console to keep from logging when unwanted
   ***/
-  var debug = {}
-  debug.setup = function (doDebug) {
-    debug.log = (doDebug) ? window.console.log : function () {}
-    debug.error = (doDebug) ? window.console.error : function () {}
-  }
+  var debug = jppolAdOps.debug
   /***
   * Helper: mergeObject
   * The values in the overwriteObject will always trump the values in baseObject
@@ -28,7 +24,7 @@
       }
       return returnObj
     } catch (err) {
-      console.error('sharedsafeframes', 'mergeObj ', err)
+      console.error('jppol-safeframes: jppolhost.js', 'mergeObj ', err)
     }
   }
 
@@ -107,7 +103,7 @@
   * NOTE: Seems this is never called
   **/
   function beforePosMsg (posID) {
-    console.log('sharedsafeframes', 'beforePosMsg', 'is this coming through?', posID)
+    console.log('jppol-safeframes: jppolhost.js', 'beforePosMsg', 'is this coming through?', posID)
   }
 
   /**
@@ -116,17 +112,17 @@
   **/
   function posMsg (posID, type, content) {
     try {
-      debug.log('sharedsafeframes', 'safeframe posMsg', posID, type, content)
+      debug.log('jppol-safeframes: jppolhost.js', 'safeframe posMsg', posID, type, content)
       var nuked = false
       if (content === 'nuke' && sfOptions.fulldebug) {
         document.getElementById(posID + '_container').appendChild(document.createTextNode('$sf.host.nuke(' + posID + ')  - nuke allowed:' + sfOptions.allowNuke))
       }
       if (content === 'nuke' && sfOptions.allowNuke) { // || type === 'error') { // TODO: we should handle errors somehow
-        debug.log('sharedsafeframes', 'safeframe posMsg nuke el:', posID)
+        debug.log('jppol-safeframes: jppolhost.js', 'safeframe posMsg nuke el:', posID)
         $sf.host.nuke(posID)
         nuked = true
       }
-      debug.log('sharedsafeframes', 'safeframe wallpaper', (sfOptions.wallpaperHandler && typeof sfOptions.wallpaperSelector !== 'undefined'))
+      debug.log('jppol-safeframes: jppolhost.js', 'safeframe wallpaper', (sfOptions.wallpaperHandler && typeof sfOptions.wallpaperSelector !== 'undefined'))
       if (sfOptions.wallpaperHandler && typeof sfOptions.wallpaperSelector !== 'undefined') {
         if (nuked === false && type === 'msg' && sfOptions.wallpaperPositionsString.indexOf(posID) !== -1 && content.indexOf('styling:') !== -1) { // (posID === 'monster' || posID === 'wallpaper')) {
           var bgCSS = content.split('styling:')[1]
@@ -155,7 +151,7 @@
         sfOptions.messageCallback(messageObject)
       }
     } catch (err) {
-      debug.error('sharedsafeframes', 'safeframe posMsg follow error', err)
+      debug.error('jppol-safeframes: jppolhost.js', 'safeframe posMsg follow error', err)
     }
   }
 
@@ -170,9 +166,9 @@
   * A callback function that gets fired when a SafeFrame finishes rendering 3rd party content.
   **/
   function endPosRender (posID) {
-    debug.log('sharedsafeframes', 'safeframe onEndPosRender arguments', posID)
-    debug.log('sharedsafeframes', 'safeframe onEndPosRender status', $sf.host.status(posID))
-    debug.log('sharedsafeframes', 'safeframe onEndPosRender el', document.getElementById(posID + '_trgt'))
+    debug.log('jppol-safeframes: jppolhost.js', 'safeframe onEndPosRender arguments', posID)
+    debug.log('jppol-safeframes: jppolhost.js', 'safeframe onEndPosRender status', $sf.host.status(posID))
+    debug.log('jppol-safeframes: jppolhost.js', 'safeframe onEndPosRender el', document.getElementById(posID + '_trgt'))
   }
 
   /**
@@ -202,7 +198,7 @@
 
       var posMeta = new $sf.host.PosMeta(shared_data, private_data_key, private_data)
 
-      debug.log('sharedsafeframes', 'safeframe', 'setupFinalPos', positionData)
+      debug.log('jppol-safeframes: jppolhost.js', 'safeframe', 'setupFinalPos', positionData)
       if (typeof positionData.placement !== 'undefined') {
         var posConf = new $sf.host.PosConfig({
           id:	positionData.placement, // position ID
@@ -215,7 +211,7 @@
 
         var keyValueString = getKeyValues(positionData.keyValues)
 
-        debug.log('sharedsafeframes', 'safeframe', 'so kv for:', positionData.placement, 'is', keyValueString, 'and type is', positionData.type)
+        debug.log('jppol-safeframes: jppolhost.js', 'safeframe', 'so kv for:', positionData.placement, 'is', keyValueString, 'and type is', positionData.type)
         var bannerID = positionData.bannerID
         var aliasString = ''
         var type = positionData.type
@@ -227,7 +223,7 @@
         var baseBannerSrc = (typeof sfOptions.baseBannerSrc === 'object') ? sfOptions.baseBannerSrc[sfOptions.device] : sfOptions.baseBannerSrc
         var networkId = (typeof sfOptions.adtechNetworkId === 'object') ? sfOptions.adtechNetworkId[sfOptions.device] : sfOptions.adtechNetworkId
         var bannerSrc = baseBannerSrc + networkId + '/' + bannerID + '/0/' + type + '/ADTECH;loc=100;' + aliasString + 'target=_blank;key=key1+key2+key3+key4;' + keyValueString + 'grp=[group];misc=' + new Date().getTime()
-        debug.log('sharedsafeframes', 'safeframe', 'so bannerSrc for:', positionData.placement, 'is', bannerSrc, 'with conf', posConf, 'and meta', posMeta, positionData)
+        debug.log('jppol-safeframes: jppolhost.js', 'safeframe', 'so bannerSrc for:', positionData.placement, 'is', bannerSrc, 'with conf', posConf, 'and meta', posMeta, positionData)
         var pos = new $sf.host.Position({
           id: positionData.placement,
           src: bannerSrc,
@@ -237,7 +233,7 @@
         $sf.host.render(pos)
       }
     } catch (err) {
-      debug.error('sharedsafeframes', 'jppolAdOps.setupFinalPos', err)
+      debug.error('jppol-safeframes: jppolhost.js', 'jppolAdOps.setupFinalPos', err)
     }
   }
 
@@ -278,20 +274,23 @@
       sfOptions.wallpaperPositionsString = (typeof sfOptions.wallpaperPositions === 'string') ? sfOptions.wallpaperPositions : sfOptions.wallpaperPositions.join(',')
       sfOptions.debug = sfOptions.fulldebug || sfOptions.debug
       debug.setup(sfOptions.debug)
-      debug.log('sharedsafeframes', 'setting up safeframes with', options, privateDataOptions)
+      debug.log('jppol-safeframes: jppolhost.js', 'setting up safeframes with', options, privateDataOptions)
+
+      var renderFileUrl = (sfOptions.safeframeURL.indexOf('?') !== -1) ? sfOptions.safeframeURL + '&debug=' + sfOptions.debug : sfOptions.safeframeURL + '?debug=' + sfOptions.debug
+
       /**
       * safeframes setup for page
       **/
       var jppolSafeFrameConf = new $sf.host.Config({
         debug: sfOptions.debug,
-        renderFile: sfOptions.safeframeURL,
+        renderFile: renderFileUrl,
         onStartPosRender: startPosRender,
         onEndPosRender: endPosRender,
         onBeforePosMsg: beforePosMsg,
         onPosMsg: posMsg
       })
     } catch (err) {
-      debug.error('sharedsafeframes', 'jppolAdOps.safeframeInit', err)
+      debug.error('jppol-safeframes: jppolhost.js', 'jppolAdOps.safeframeInit', err)
     }
   }
 }(window.jppolAdOps = window.jppolAdOps || {}))
