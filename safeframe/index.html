@@ -71,17 +71,19 @@
               debug.log('safeframes: inside safeframe', '@load position:', position)
               if (gotADTECHBanner && !endedUpEmpty) {
                 debug.log('safeframes: inside safeframe', 'we got a banner', position)
+                var loadedMessage = 'safeframeloaded'
                 if (position === 'monster' || position === 'wallpaper') {
                   var stylingAttrCustom = document.getElementById('adtechWallpaper').getAttribute('style')
                   var stylingAttrBody = document.body.getAttribute('style')
+                  debug.log('safeframes: inside safeframe','wallpaper style:', stylingAttrBody, '||', stylingAttrCustom)
                   if (stylingAttrCustom !== null && stylingAttrCustom.match(/url\((.*?)\)/)) {
-                    $sf.ext.message('styling:' + stylingAttrCustom)
+                    loadedMessage += '[styling:' + stylingAttrCustom + ']'
                   } else if (stylingAttrBody !== null && stylingAttrBody.match(/url\((.*?)\)/)) {
-                    $sf.ext.message('styling:' + stylingAttrBody)
+                    loadedMessage += '[styling:' + stylingAttrBody + ']'
                   }
                   debug.log('safeframes: inside safeframe', 'got wallpaper from', position, stylingAttrCustom, stylingAttrBody)
                 }
-                var loadedMessage = 'safeframeloaded'
+
                 if (sf_align.querySelector('.prebidPlaceholder') !== null) {
                   loadedMessage += '|prebid'
                 } else if (sf_align.querySelector('.prebidPlaceholder_xhb') !== null) {

@@ -6,6 +6,7 @@
   * Wrapping console to keep from logging when unwanted
   ***/
   var debug = jppolAdOps.debug
+
   /***
   * Helper: mergeObject
   * The values in the overwriteObject will always trump the values in baseObject
@@ -24,7 +25,7 @@
       }
       return returnObj
     } catch (err) {
-      console.error('jppol-safeframes: jppolhost.js', 'mergeObj ', err)
+      debug.error('jppol-safeframes: jppolhost.js', 'mergeObj ', err)
     }
   }
 
@@ -36,17 +37,21 @@
   ********
   *******/
   var adtechKvAdder = function (str, obj) {
-    var split_str = str.split(';')
-    var strLength = split_str.length
-    var obj = obj || {}
-    for (var i = strLength - 1; i--;) {
-      var kv = split_str[i].replace('kv', '')
-      var kvsplit = kv.split('=')
-      var k = kvsplit[0]
-      var v = kvsplit[1]
-      obj[k] = v
+    try {
+      var split_str = str.split(';')
+      var strLength = split_str.length
+      var obj = obj || {}
+      for (var i = strLength - 1; i--;) {
+        var kv = split_str[i].replace('kv', '')
+        var kvsplit = kv.split('=')
+        var k = kvsplit[0]
+        var v = kvsplit[1]
+        obj[k] = v
+      }
+      return obj
+    } catch (err) {
+      debug.error('jppol-safeframes: jppolhost.js', 'adtechKvAdder', err)
     }
-    return obj
   }
 
   var adtechKv = {
@@ -79,14 +84,18 @@
   }
 
   function getKeyValues (placementKv) {
-    if (typeof placementKv !== 'undefined') {
-      for (var i = placementKv.length; i--;) {
-        placementKv[i] = 'kv' + placementKv[i]
+    try {
+      if (typeof placementKv !== 'undefined') {
+        for (var i = placementKv.length; i--;) {
+          placementKv[i] = 'kv' + placementKv[i]
+        }
       }
+      var kvArray = (typeof placementKv !== 'undefined') ? adtechKvArr.concat(placementKv) : adtechKvArr
+      var returnValue = (kvArray.length > 0) ? kvArray.join(';') + ';' : ''
+      return returnValue
+    } catch (err) {
+      debug.error('jppol-safeframes: jppolhost.js', 'getKeyValues', err)
     }
-    var kvArray = (typeof placementKv !== 'undefined') ? adtechKvArr.concat(placementKv) : adtechKvArr
-    var returnValue = (kvArray.length > 0) ? kvArray.join(';') + ';' : ''
-    return returnValue
   }
 
   /*******
@@ -103,7 +112,7 @@
   * NOTE: Seems this is never called
   **/
   function beforePosMsg (posID) {
-    console.log('jppol-safeframes: jppolhost.js', 'beforePosMsg', 'is this coming through?', posID)
+    debug.log('jppol-safeframes: jppolhost.js', 'beforePosMsg', 'is this coming through?', posID)
   }
 
   /**
@@ -125,7 +134,7 @@
       debug.log('jppol-safeframes: jppolhost.js', 'safeframe wallpaper', (sfOptions.wallpaperHandler && typeof sfOptions.wallpaperSelector !== 'undefined'))
       if (sfOptions.wallpaperHandler && typeof sfOptions.wallpaperSelector !== 'undefined') {
         if (nuked === false && type === 'msg' && sfOptions.wallpaperPositionsString.indexOf(posID) !== -1 && content.indexOf('styling:') !== -1) { // (posID === 'monster' || posID === 'wallpaper')) {
-          var bgCSS = content.split('styling:')[1]
+          var bgCSS = content.split('[styling:')[1].split(']')[0]
           var wpEl = null
           if (sfOptions.wallpaperSelector === 'body') {
             wpEl = document.body
