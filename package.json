@@ -17,12 +17,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EkstraBladetUdvikling/sharedsafeframes.git"
+    "url": "git+https://github.com/EkstraBladetUdvikling/jppol-safeframes.git"
   },
   "author": "tegner",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/EkstraBladetUdvikling/sharedsafeframes/issues"
+    "url": "https://github.com/EkstraBladetUdvikling/jppol-safeframes/issues"
   },
-  "homepage": "https://github.com/EkstraBladetUdvikling/sharedsafeframes#readme"
+  "homepage": "https://github.com/EkstraBladetUdvikling/jppol-safeframes#readme"
 }
