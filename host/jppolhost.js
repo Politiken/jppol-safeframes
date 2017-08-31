@@ -105,6 +105,9 @@
   ********
   ********
   *******/
+  function nukeSafeframe (posID) {
+    $sf.host.nuke(posID)
+  }
 
   /**
   * onBeforePosMsg
@@ -128,7 +131,8 @@
       }
       if (content === 'nuke' && sfOptions.allowNuke) { // || type === 'error') { // TODO: we should handle errors somehow
         debug.log('jppol-safeframes: jppolhost.js', 'safeframe posMsg nuke el:', posID)
-        $sf.host.nuke(posID)
+        // $sf.host.nuke(posID)
+        nukeSafeframe(posID)
         nuked = true
       }
       debug.log('jppol-safeframes: jppolhost.js', 'safeframe wallpaper', (sfOptions.wallpaperHandler && typeof sfOptions.wallpaperSelector !== 'undefined'))
@@ -179,6 +183,11 @@
     debug.log('jppol-safeframes: jppolhost.js', 'safeframe onEndPosRender status', $sf.host.status(posID))
     debug.log('jppol-safeframes: jppolhost.js', 'safeframe onEndPosRender el', document.getElementById(posID + '_trgt'))
   }
+
+  /**
+  * Expose nuke funtion
+  **/
+  jppolAdOps.nukeSafeframe = nukeSafeframe
 
   /**
   * Set up specific banner Position safeframe
