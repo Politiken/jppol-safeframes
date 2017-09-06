@@ -72,7 +72,7 @@
               var loadedMessage = 'safeframeloaded'
               if (position === 'monster' || position === 'wallpaper') {
                 var stylingAttrCustom = document.getElementById('adtechWallpaper').getAttribute('style')
-                var stylingAttrBody = document.body.getAttribute('style')
+                var stylingAttrBody = document.body.getAttribute('style') || 'background:' + window.getComputedStyle(document.body,null).getPropertyValue("background") + ';'
                 debug.log('safeframes: inside safeframe','wallpaper style:', stylingAttrBody, '||', stylingAttrCustom)
                 if (stylingAttrCustom !== null && stylingAttrCustom.match(/url\((.*?)\)/)) {
                   loadedMessage += '[styling:' + stylingAttrCustom + ']'
