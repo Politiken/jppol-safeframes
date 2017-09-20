@@ -63,10 +63,19 @@
   <script>
     ;(function (jppolAdOps) {
       try {
+        function status_update(status, data) {
+          console.log('status_update .geom $sf.ext.inViewPercentage() = ', $sf.ext.inViewPercentage())
+          console.log('status_update', 'exp.t (equals the distance from the top of the banner to the top of the page, will be zero if outside view)', $sf.ext.geom().exp.t)
+          console.log('status_update', 'win.h (equals window.innerHeight on parent page)', $sf.ext.geom().win.h)
+        }
+
         var debug = jppolAdOps.debug
         debug.setup(location.href.indexOf('debug=true') !== -1)
 
         var position = $sf.ext.meta('banner_position')
+        if (position === 'intextbanner') {
+            $sf.ext.register(930, 180, status_update)
+        }
         var sf_align = document.getElementById('sf_align')
         sf_align.classList.add(position)
         sf_align.parentNode.classList.add(position)
