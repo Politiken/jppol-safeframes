@@ -7,6 +7,7 @@
   ***/
   var debug = {}
   debug.setup = function (doDebug) {
+    window.console = window.console || {}
     debug.log = (doDebug) ? window.console.log : function () {}
     debug.error = (doDebug) ? window.console.error : function () {}
   }
