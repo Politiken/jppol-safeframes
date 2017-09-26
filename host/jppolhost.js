@@ -85,12 +85,20 @@
 
   function getKeyValues (placementKv) {
     try {
-      if (typeof placementKv !== 'undefined') {
+      var concatArray = []
+      if (typeof placementKv !== 'undefined' && Array.isArray(placementKv)) {
         for (var i = placementKv.length; i--;) {
           placementKv[i] = 'kv' + placementKv[i]
         }
+        concatArray = placementKv
+      } else if (typeof placementKv !== 'undefined' && !Array.isArray(placementKv)) {
+        for (var key in placementKv) {
+          concatArray.push('kv' + key + '=' + placementKv[key])
+        }
       }
-      var kvArray = (typeof placementKv !== 'undefined') ? adtechKvArr.concat(placementKv) : adtechKvArr
+
+      var kvArray = adtechKvArr.concat(concatArray)
+      console.log('getKeyValues', kvArray)
       var returnValue = (kvArray.length > 0) ? kvArray.join(';') + ';' : ''
       return returnValue
     } catch (err) {
