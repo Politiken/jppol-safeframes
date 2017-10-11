@@ -298,7 +298,7 @@ var positionData = {
 ```
 
 ### Dimensions
-* Mandatory [number]
+* Mandatory
 * sfWidth [number]
 * sfHeight [number]
 * sfZIndex [number]
@@ -362,3 +362,19 @@ At the moment safeframes only support strings to be sent from inside the safefra
 ## load
 
 When the banner is loaded the safeframe sends the a message with the content "safeframeloaded"
+
+### data
+
+Since the safeframe API doesnt support objects in messaging, additional data is appended with a pipe [|]
+If a prebid placeholder is present the prebid type will be appended, otherwise the width and height dimensions will be appended.
+See example implementation from safeframe below
+
+```js
+if (sf_align.querySelector('.prebidPlaceholder') !== null) {
+  loadedMessage += '|prebid'
+} else if (sf_align.querySelector('.prebidPlaceholder_xhb') !== null) {
+  loadedMessage += '|prebid_xhb'
+} else {
+  loadedMessage += '|w' + sf_align.clientWidth + '|h' + sf_align.clientHeight
+}
+```
