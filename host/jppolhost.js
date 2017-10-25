@@ -135,7 +135,10 @@
       debug.log('jppol-safeframes: jppolhost.js', 'safeframe posMsg', posID, type, content)
       var nuked = false
       if (content === 'nuke' && sfOptions.fulldebug) {
-        document.getElementById(posID + '_container').appendChild(document.createTextNode('$sf.host.nuke(' + posID + ')  - nuke allowed:' + sfOptions.allowNuke))
+        // document.getElementById(posID + '_container').appendChild(document.createTextNode('$sf.host.nuke(' + posID + ')  - nuke allowed:' + sfOptions.allowNuke))
+        debug.log(':::::: NUKED ::::::')
+        debug.log('$sf.host.nuke(' + posID + ')  - nuke allowed')
+        debug.log(':::::: NUKED ::::::')
       }
       if (content === 'nuke' && sfOptions.allowNuke) { // || type === 'error') { // TODO: we should handle errors somehow
         debug.log('jppol-safeframes: jppolhost.js', 'safeframe posMsg nuke el:', posID)
@@ -189,7 +192,7 @@
   function endPosRender (posID) {
     debug.log('jppol-safeframes: jppolhost.js', 'safeframe onEndPosRender arguments', posID)
     debug.log('jppol-safeframes: jppolhost.js', 'safeframe onEndPosRender status', $sf.host.status(posID))
-    debug.log('jppol-safeframes: jppolhost.js', 'safeframe onEndPosRender el', document.getElementById(posID + '_trgt'))
+    // debug.log('jppol-safeframes: jppolhost.js', 'safeframe onEndPosRender el', document.getElementById(posID + '_trgt'))
   }
 
   /**
