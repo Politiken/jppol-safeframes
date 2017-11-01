@@ -249,7 +249,12 @@
         }
         var baseBannerSrc = (typeof sfOptions.baseBannerSrc === 'object') ? sfOptions.baseBannerSrc[sfOptions.device] : sfOptions.baseBannerSrc
         var networkId = (typeof sfOptions.adtechNetworkId === 'object') ? sfOptions.adtechNetworkId[sfOptions.device] : sfOptions.adtechNetworkId
-        var bannerSrc = baseBannerSrc + networkId + '/' + bannerID + '/0/' + type + '/ADTECH;loc=100;' + aliasString + 'target=_blank;key=key1+key2+key3+key4;' + keyValueString + 'grp=[group];misc=' + new Date().getTime()
+
+        var bannerSrc = ''
+        if (!sfOptions.prebid) {
+          bannerSrc = baseBannerSrc + networkId + '/' + bannerID + '/0/' + type + '/ADTECH;loc=100;' + aliasString + 'target=_blank;key=key1+key2+key3+key4;' + keyValueString + 'grp=[group];'
+        }
+        bannerSrc += 'misc=' + new Date().getTime()
 
         shared_data.bannerurl = bannerSrc
         var posMeta = new $sf.host.PosMeta(shared_data, private_data_key, private_data)

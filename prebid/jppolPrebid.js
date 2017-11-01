@@ -3,8 +3,6 @@
 ;(function (jppolAdOps, pbjs) {
   pbjs.que = pbjs.que || []
 
-  jppolAdOps.eventName = 'prebidDoneEvent'
-
   var ebBidReturns = {}
   var bidTimeout = 800
 
@@ -61,12 +59,13 @@
   }
 
   jppolAdOps.triggerEvent = triggerEvent
+  jppolAdOps.prebidCache = {}
 
   function addBannersToPrebid (banners) {
     var ebpc = banners
     pbjs.que.push(function () {
       var adUnits = jppolAdOps.biddersetup(banners)
-
+      console.log('xxxYx adUnits', adUnits)
       jppolAdOps.prebidDone = {
         'status': 'undone'
       }
@@ -95,7 +94,8 @@
                   console.log('prebid', 'bidResponse setting params from pbjs to ebBidReturns', params, adUnitCode)
 
                   // ebBidReturns[adUnitCode] = params
-                  // jppolAdOps.prebidCache[adUnitCode].params = params
+                  jppolAdOps.prebidCache[adUnitCode] = {}
+                  jppolAdOps.prebidCache[adUnitCode].params = params
                   var winningCPM = params['hb_pb'] || 0
                   if (typeof winningCPM === 'string') {
                     winningCPM = parseFloat(winningCPM)
@@ -130,14 +130,22 @@
                   // adPlacement.placementKV['prebid1'] = 1 // TODO: ONLY FOR TESTING!!!
                   // adPlacement.placementKVsafeframe.push('prebid1=1') // TODO: ONLY FOR TESTING!!!
 
-                  console.log('prebid', 'adtech', 'placementKV: ', adPlacement.placementKV, 'placementKVsafeframe: ', adPlacement.placementKVsafeframe, 'winningCPM', winningCPM)
-                  jppolAdOps.prebidDone[adUnitCode] = {
-                    'adUnit': adUnitCode,
-                    'placement': adPlacement
-                  }
-                  jppolAdOps.triggerEvent(window, jppolAdOps.eventName, {
-                    'detail': jppolAdOps.prebidDone[adUnitCode]
-                  })
+                  console.log('xxxYx prebid', 'adtech', 'placementKV: ', adPlacement.placementKV, 'placementKVsafeframe: ', adPlacement.placementKVsafeframe, 'winningCPM', winningCPM)
+                  console.log('xxxYx prebid - jppolAdOps.eventName', jppolAdOps.eventName)
+                  console.log('xxxYx prebid - jppolAdOps.prebidSettings', jppolAdOps.prebidSettings)
+
+                  // jppolAdOps.prebidDone[adUnitCode] = {
+                  //   'adUnit': adUnitCode,
+                  //   'placement': adPlacement
+                  // }
+                  var adtechDataObj = jppolAdOps.prebidSettings.adtechDataObj
+                  adtechDataObj.kv = mergeObject(adPlacement.placementKV, jppolAdOps.prebidSettings.adtechDataObj.kv)
+
+                  jppolAdOps.prebidSettings.callback(adtechDataObj)
+
+                  // jppolAdOps.triggerEvent(window, jppolAdOps.eventName, {
+                  //   'detail': jppolAdOps.prebidDone[adUnitCode]
+                  // })
                 }
                 jppolAdOps.prebidDone['status'] = 'done'
               }
@@ -161,16 +169,13 @@
 
         var heightStyle = 'height:' + size[1] + 'px;'
         var styleStr = 'border:0;margin:0 auto;' + 'width:' + size[0] + 'px;' + heightStyle
-        var innerContainer = container.children[0] || container
         newIframe.setAttribute('style', styleStr)
         newIframe.setAttribute('scrolling', 'no')
-        while (innerContainer.firstChild) {
-          innerContainer.removeChild(innerContainer.firstChild)
+        while (container.firstChild) {
+          container.removeChild(container.firstChild)
         }
-        innerContainer.setAttribute('style', heightStyle)
-        innerContainer.appendChild(newIframe)
-        innerContainer.classList.add('gotPrebidded')
-        container.classList.add('has-content')
+        container.setAttribute('style', heightStyle)
+        container.appendChild(newIframe)
         var iframeDoc = newIframe.contentWindow.document
         // and then we render
         console.log('prebid', 'now we render? (params)', params, paramName)
