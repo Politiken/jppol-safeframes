@@ -135,7 +135,7 @@ var messageObject = {
 Init setup example
 ```js
   var sfOptions = {
-    onPosMsg: handleCallBack
+    messageCallback: handleCallBack
   }
 ```
 
