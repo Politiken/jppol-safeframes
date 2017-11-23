@@ -64,7 +64,7 @@
               console.log('xxxYx position, prebidElement.classList, prebidElement', position, prebidElement.className, prebidElement)
               var prebidType = prebidElement.className
               prebidElement.className = ''
-              jppolAdOps.renderPrebidAd('currentBannerForPrebid', prebidElement.className, prebidElement)
+              jppolAdOps.renderPrebidAd('currentBannerForPrebid', prebidType, prebidElement)
               loadedMessage += '|w' + sf_align.clientWidth + '|h' + sf_align.clientHeight
               $sf.ext.message(loadedMessage)
             } else {

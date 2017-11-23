@@ -160,6 +160,7 @@
 
   function renderPrebidAd (posID, prebidType, container) {
     try {
+      console.log('renderPrebidAd', posID, prebidType, container)
       if (container !== null && typeof jppolAdOps.prebidCache[posID] !== 'undefined') {
         var params = jppolAdOps.prebidCache[posID].params
 
