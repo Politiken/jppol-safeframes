@@ -72,12 +72,7 @@
     ;(function (jppolAdOps) {
       try {
 
-        function status_update(status, data) {
-          // console.log('status_update status', status)
-          // console.log('status_update .geom $sf.ext.inViewPercentage() = ', $sf.ext.inViewPercentage())
-          // console.log('status_update', 'exp.t (equals the distance from the top of the banner to the top of the page, will be zero if outside view)', $sf.ext.geom().exp.t)
-          // console.log('status_update', 'win.h (equals window.innerHeight on parent page)', $sf.ext.geom().win.h)
-        }
+        function status_update(status, data) {        }
 
         function fwUpdate(status) {
           if (status === 'expanded' || status === 'collapsed') {
@@ -92,10 +87,7 @@
         if (position === 'intextbanner') {
             $sf.ext.register(930, 180, status_update)
         }
-        // console.log('$sf.ext.geom()', $sf.ext.geom());
-        // console.log('$sf.ext status_update', 'win.h (equals window.innerHeight on parent page)', $sf.ext.geom().win.h)
-        // console.log('$sf.ext status_update', 'win.w (equals window.innerWidth on parent page)', $sf.ext.geom().win.w)
-        // $sf.ext.expand(400, 200)
+
         if (position.indexOf('mega') !== -1) {
           $sf.ext.register($sf.ext.geom().self.w, $sf.ext.geom().self.h, fwUpdate)
         }
@@ -105,7 +97,7 @@
         sf_align.parentNode.classList.add(position)
 
       } catch (err) {
-        debug.error('safeframes: inside safeframe', err)
+        console.error('safeframes: inside safeframe', err)
       }
     }(window.jppolAdOps = window.jppolAdOps || {}))
   </script>

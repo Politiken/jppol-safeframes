@@ -65,7 +65,7 @@
     var ebpc = banners
     pbjs.que.push(function () {
       var adUnits = jppolAdOps.biddersetup(banners)
-      console.log('xxxYx adUnits', adUnits)
+
       jppolAdOps.prebidDone = {
         'status': 'undone'
       }
@@ -77,21 +77,13 @@
           timeout: bidTimeout,
           bidsBackHandler: function (bidResponse) {
             try {
-              console.log('prebid', 'bidResponse', bidResponse)
               if (typeof bidResponse !== 'undefined' && Object.keys(bidResponse).length !== 0) {
                 for (var key in bidResponse) {
-                  console.log('prebid', 'key in bidResponse', bidResponse[key])
                   var bidsReturned = bidResponse[key].bids
                   var adUnitCode = bidsReturned[0].adUnitCode
-                  console.log('prebid', 'bidResponse adUnitCode', adUnitCode)
                   var adPlacement = ebpc[adUnitCode] || ''
-                  console.log('prebid', 'bidResponse adPlacement', adPlacement, ' - jppolAdOps.prebidSettings - ', jppolAdOps.prebidSettings)
                   var askAdtech = (adPlacement !== '') ? true : false
-                  console.log('prebid', 'bidResponse getting params from pbjs for adUnitCode', adUnitCode, 'askAdtech', askAdtech)
-
                   var params = pbjs.getAdserverTargetingForAdUnitCode(adUnitCode) || {}
-
-                  console.log('prebid', 'bidResponse setting params from pbjs to ebBidReturns', params, adUnitCode)
 
                   // ebBidReturns[adUnitCode] = params
                   jppolAdOps.prebidCache[adUnitCode] = {}
@@ -101,17 +93,11 @@
                     winningCPM = parseFloat(winningCPM)
                   }
 
-                  console.log('prebid', 'bidsReturned', bidsReturned)
-
                   // if Adform is the winner of the auction, figure out if we need to use DKK or USD as currency
                   var cpms = (params['hb_bidder'] === 'adform' && jppolAdOps.prebidSettings.isadformusd === false) ? jppolAdOps.prebidSettings['cpmValuesDKK'] : jppolAdOps.prebidSettings['cpmValues']
                   var xhbDeal = (params['hb_xhb_deal'] === '99999999')
 
                   var minimumCPM = parseFloat(cpms[cpms.length - 1])
-                  console.log('prebid', 'Is winning cpm ', winningCPM, 'from', params['hb_bidder'], 'higher than or equal to our minimum cpm', minimumCPM, (winningCPM >= minimumCPM))
-                  console.log('prebid', 'Got xhbDeal ', xhbDeal)
-                  console.log('prebid', 'should', adUnitCode, 'askAdtech', askAdtech, 'with winningCPM:', winningCPM, 'from', bidsReturned.length, 'bids')
-                  console.log('prebid', 'adtech', 'winningCPM', winningCPM, 'cpmValues from secParam', cpms)
                   adPlacement.placementKV = {} // TODO: DAC type KV
                   adPlacement.placementKVsafeframe = []
 
@@ -127,25 +113,11 @@
                       adPlacement.placementKVsafeframe.push('prebid' + (i + 1) + '=1')
                     }
                   }
-                  // adPlacement.placementKV['prebid1'] = 1 // TODO: ONLY FOR TESTING!!!
-                  // adPlacement.placementKVsafeframe.push('prebid1=1') // TODO: ONLY FOR TESTING!!!
 
-                  console.log('xxxYx prebid', 'adtech', 'placementKV: ', adPlacement.placementKV, 'placementKVsafeframe: ', adPlacement.placementKVsafeframe, 'winningCPM', winningCPM)
-                  console.log('xxxYx prebid - jppolAdOps.eventName', jppolAdOps.eventName)
-                  console.log('xxxYx prebid - jppolAdOps.prebidSettings', jppolAdOps.prebidSettings)
-
-                  // jppolAdOps.prebidDone[adUnitCode] = {
-                  //   'adUnit': adUnitCode,
-                  //   'placement': adPlacement
-                  // }
                   var adtechDataObj = jppolAdOps.prebidSettings.adtechDataObj
                   adtechDataObj.kv = mergeObject(adPlacement.placementKV, jppolAdOps.prebidSettings.adtechDataObj.kv)
 
                   jppolAdOps.prebidSettings.callback(adtechDataObj)
-
-                  // jppolAdOps.triggerEvent(window, jppolAdOps.eventName, {
-                  //   'detail': jppolAdOps.prebidDone[adUnitCode]
-                  // })
                 }
                 jppolAdOps.prebidDone['status'] = 'done'
               }
@@ -160,7 +132,6 @@
 
   function renderPrebidAd (posID, prebidType, container) {
     try {
-      console.log('renderPrebidAd', posID, prebidType, container)
       if (container !== null && typeof jppolAdOps.prebidCache[posID] !== 'undefined') {
         var params = jppolAdOps.prebidCache[posID].params
 
@@ -178,8 +149,8 @@
         container.setAttribute('style', heightStyle)
         container.appendChild(newIframe)
         var iframeDoc = newIframe.contentWindow.document
+
         // and then we render
-        console.log('prebid', 'now we render? (params)', params, paramName)
         iframeDoc.body.setAttribute('style', 'margin:0;padding:0;')
         pbjs.renderAd(iframeDoc, params[paramName])
         newIframe.addEventListener('load', function () {
