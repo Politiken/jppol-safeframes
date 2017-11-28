@@ -1,13 +1,22 @@
-# sharedsafeframes
+# jppol-safeframes
 JPPol shared safeframes implementation
 
 Based on https://github.com/InteractiveAdvertisingBureau/safeframe
 
 # Table of Contents
-1. [Safeframe side setup](#safeframe-side)
-2. [Host side setup](#host-side)
-3. [Calling banner](#calling-banner)
-4. [Special formats - Callbacks](#callbacks)
+1. [Install](#install)
+2. [Safeframe side setup](#safeframe-side)
+3. [Host side setup](#host-side)
+4. [Calling banner](#calling-banner)
+5. [Special formats - Callbacks](#callbacks)
+
+# install
+
+[View package on npm](https://www.npmjs.com/package/@ekstra-bladet/jppol-safeframes)
+
+```
+npm install "@ekstra-bladet/jppol-safeframes" --save
+```
 
 # Safeframe side
 Upload the safeframe folder of this project to an external address

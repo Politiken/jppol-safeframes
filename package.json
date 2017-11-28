@@ -1,19 +1,21 @@
 {
-  "name": "sharedsafeframes",
-  "version": "0.0.1",
+  "name": "@ekstra-bladet/jppol-safeframes",
+  "version": "0.0.2",
   "description": "JPPol shared safeframes implementation",
   "main": "index.js",
   "dependencies": {
+    "prebid.js": "^0.31.0",
     "safeframe": "^1.1.3"
   },
   "devDependencies": {
     "uglify-js": "^3.0.24"
   },
   "scripts": {
-    "dist": "npm run host && npm run ext",
+    "dist": "npm run host && npm run ext && npm run prebid",
     "host": "uglifyjs \"util/log.js\" \"sf_api/src/js/lib/base.js\" \"sf_api/src/js/host/host.js\" \"sf_api/src/js/lib/boot.js\" \"host/jppolhost.js\" -o \"host/jppolhost.min.js\" -c -m",
     "ext": "uglifyjs \"util/log.js\" \"sf_api/src/js/lib/base.js\" \"sf_api/src/js/ext/ext.js\" -o \"safeframe/ext.min.js\" -c -m",
-    "hostnpm": "uglifyjs \"node_modules/safeframe/src/js/lib/base.js\" \"node_modules/safeframe/src/js/host/host.js\" \"node_modules/safeframe/src/js/lib/boot.js\" \"host/jppolhost.js\" -o \"host/jppolhost.min.js\" -c -m"
+    "hostnpm": "uglifyjs \"node_modules/safeframe/src/js/lib/base.js\" \"node_modules/safeframe/src/js/host/host.js\" \"node_modules/safeframe/src/js/lib/boot.js\" \"host/jppolhost.js\" -o \"host/jppolhost.min.js\" -c -m",
+    "prebid": "uglifyjs \"node_modules/prebid.js/build/dist/prebid.js\" \"prebid/bidder-handling.js\" \"prebid/jppolPrebid.js\" -o \"safeframe/jppolPrebid.min.js\" -c -m"
   },
   "repository": {
     "type": "git",
