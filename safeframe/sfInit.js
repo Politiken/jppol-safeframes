@@ -57,14 +57,17 @@
 
             var prebidElement = sf_align.querySelectorAll('.prebidPlaceholder, .prebidPlaceholder_xhb')[0]
             // Tell host about bannersize
+            var bannerHeight = sf_align.clientHeight || sf_align.offsetHeight
+            var bannerWidth = sf_align.clientWidth || sf_align.offsetWidth
+            console.log('ARGH COME ON!', position, bannerHeight, bannerWidth)
             if (typeof prebidElement !== 'undefined') {
               var prebidType = prebidElement.className
               prebidElement.className = ''
               jppolAdOps.renderPrebidAd('currentBannerForPrebid', prebidType, prebidElement)
-              loadedMessage += '|w' + sf_align.clientWidth + '|h' + sf_align.clientHeight
+              loadedMessage += '|w' + bannerWidth + '|h' + bannerHeight
               $sf.ext.message(loadedMessage)
             } else {
-              loadedMessage += '|w' + sf_align.clientWidth + '|h' + sf_align.clientHeight
+              loadedMessage += '|w' + bannerWidth + '|h' + bannerHeight
               $sf.ext.message(loadedMessage)
             }
           } catch (err) {
@@ -72,6 +75,8 @@
           }
         }, 0)
       }
+
+      window.addEventListener('load', adtechPlacements[adtechId].complete, false)
 
       ADTECH.loadAd(adtechId)
     } catch (err) {

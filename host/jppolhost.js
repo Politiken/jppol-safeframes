@@ -2,6 +2,16 @@
 
 ;(function (jppolAdOps) {
   /***
+  * Defaults
+  ***/
+  var defaultSupports = {
+    'exp-ovr': true,
+    'exp-push': false,
+    'read-cookie': false,
+    'write-cookie': false
+  }
+
+  /***
   * Helper: debug
   * Wrapping console to keep from logging when unwanted
   ***/
@@ -209,14 +219,19 @@
       debug.log('jppol-safeframes: jppolhost.js', 'safeframe', 'setupFinalPos', positionData)
       if (typeof positionData.placement !== 'undefined') {
         // creating safeframe API PosConfig object
-        var posConf = new $sf.host.PosConfig({
+        var posConfigObj = {
           id:	positionData.placement, // position ID
           dest: positionData.destID, // ID of element in parent page
           tgt: '_blank',
           w: positionData.sfWidth, // width of iframe
           h: positionData.sfHeight, // height of iframe
           z: positionData.sfZIndex
-        })
+        }
+
+        var supports = mergeObject(defaultSupports, positionData.supports)
+        posConfigObj.supports = supports
+        console.log('posConfigObj', posConfigObj)
+        var posConf = new $sf.host.PosConfig(posConfigObj)
 
         var keyValueString = getKeyValues(positionData.keyValues)
 

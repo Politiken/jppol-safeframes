@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 <head>
@@ -35,11 +34,16 @@
       align-items: flex-start;
       justify-content: center;
     }
+    .sf {
+      display: block;
+    }
     .follow {
+      display: flex;
       align-self: flex-start;
       justify-content: flex-start;
     }
     .followleft {
+      display: flex;
       align-items: flex-end;
       justify-content: flex-end;
     }
@@ -72,21 +76,16 @@
     ;(function (jppolAdOps) {
       try {
 
-        function status_update(status, data) {        }
-
         function fwUpdate(status) {
           if (status === 'expanded' || status === 'collapsed') {
             $sf.ext.message('openViewportOverlay:' + status)
           }
         }
-
+        console.log('supports', $sf.ext.supports())
         var debug = jppolAdOps.debug
         debug.setup(location.href.indexOf('debug=true') !== -1)
 
         var position = $sf.ext.meta('banner_position')
-        if (position === 'intextbanner') {
-            $sf.ext.register(930, 180, status_update)
-        }
 
         if (position.indexOf('mega') !== -1) {
           $sf.ext.register($sf.ext.geom().self.w, $sf.ext.geom().self.h, fwUpdate)
