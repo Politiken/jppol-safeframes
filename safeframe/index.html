@@ -56,9 +56,9 @@
 <body id="sf_body">
   <div id="adtechWallpaper" class="hidden adtechWallpaper frontpagewallpaper"></div>
   <div class="wrapper" id="sfWrapper" style="position: relative;">
-  	<div id="sf_align" class="sf">
-  		<script src="ext.min.js?v=1" class="sf"></script>
-  	</div>
+    <div id="sf_align" class="sf">
+      <script src="ext.min.js?v=1" class="sf"></script>
+    </div>
   </div>
   <script>
     ;(function (jppolAdOps) {
@@ -71,7 +71,7 @@
 
         var debug = jppolAdOps.debug
         debug.setup(location.href.indexOf('debug=true') !== -1)
-
+        
         var position = $sf.ext.meta('banner_position')
         if (position === 'intextbanner') {
             $sf.ext.register(930, 180, status_update)
@@ -88,19 +88,19 @@
             if (gotADTECHBanner && !endedUpEmpty) {
               debug.log('safeframes: inside safeframe', 'we got a banner', position)
               setTimeout(function () {
-                var loadedMessage = 'safeframeloaded'
-
-                if (position === 'monster' || position === 'wallpaper') {
-
-                  var stylingAttrCustom = document.getElementById('adtechWallpaper').getAttribute('style')
-                  var stylingAttrBody = document.body.getAttribute('style') || 'background:' + window.getComputedStyle(document.body,null).getPropertyValue("background") + ';'
-                  debug.log('safeframes: inside safeframe','wallpaper style:', stylingAttrBody, '||', stylingAttrCustom)
+                var loadedMessage = 'safeframeloaded';
+                var stylingAttrCustom = document.getElementById('adtechWallpaper').getAttribute('style');
+                var stylingAttrBody = document.body.getAttribute('style') || 'background:' + window.getComputedStyle(document.body,null).getPropertyValue("background") + ';';
+                
+                // TODO: make better check, since "stylingAttrBody" almost always contains styling
+                if (stylingAttrCustom || (stylingAttrBody && stylingAttrBody.match(/url\((.*?)\)/))) {
+                  debug.log('safeframes: inside safeframe','wallpaper style:', stylingAttrBody, '||', stylingAttrCustom);
                   if (stylingAttrCustom !== null && stylingAttrCustom.match(/url\((.*?)\)/)) {
-                    loadedMessage += '[styling:' + stylingAttrCustom + ']'
+                    loadedMessage += '[styling:' + stylingAttrCustom + ']';
                   } else if (stylingAttrBody !== null && stylingAttrBody.match(/url\((.*?)\)/)) {
-                    loadedMessage += '[styling:' + stylingAttrBody + ']'
+                    loadedMessage += '[styling:' + stylingAttrBody + ']';
                   }
-                  debug.log('safeframes: inside safeframe', 'got wallpaper from', position, stylingAttrCustom, stylingAttrBody)
+                  debug.log('safeframes: inside safeframe', 'got wallpaper from', position, stylingAttrCustom, stylingAttrBody);
                 }
 
                 if (sf_align.querySelector('.prebidPlaceholder') !== null) {
