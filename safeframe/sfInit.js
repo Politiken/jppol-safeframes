@@ -59,7 +59,6 @@
             // Tell host about bannersize
             var bannerHeight = sf_align.clientHeight || sf_align.offsetHeight
             var bannerWidth = sf_align.clientWidth || sf_align.offsetWidth
-            console.log('ARGH COME ON!', position, bannerHeight, bannerWidth)
             if (typeof prebidElement !== 'undefined') {
               var prebidType = prebidElement.className
               prebidElement.className = ''
