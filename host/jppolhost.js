@@ -230,7 +230,7 @@
 
         var supports = mergeObject(defaultSupports, positionData.supports)
         posConfigObj.supports = supports
-        console.log('posConfigObj', posConfigObj)
+        // console.log('posConfigObj', posConfigObj)
         var posConf = new $sf.host.PosConfig(posConfigObj)
 
         var keyValueString = getKeyValues(positionData.keyValues)
@@ -246,6 +246,9 @@
           type = -1
         }
         var baseBannerSrc = (typeof sfOptions.baseBannerSrc === 'object') ? sfOptions.baseBannerSrc[sfOptions.device] : sfOptions.baseBannerSrc
+        if (sfOptions.prebid) {
+          baseBannerSrc = 'sfInit.js?'
+        }
         var networkId = (typeof sfOptions.adtechNetworkId === 'object') ? sfOptions.adtechNetworkId[sfOptions.device] : sfOptions.adtechNetworkId
         var bannerSrc = baseBannerSrc
         if (!sfOptions.prebid) {

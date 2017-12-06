@@ -29,7 +29,6 @@ Creates an object called jppolAdOps, with the following exposed elements
 * [safeframeInit](#safeframeInit)
 * [setupFinalPos](#setupFinalPos)
 
-
 # Initialize JPPol Safeframes from publisher site
 ## safeframeInit
 * function
@@ -40,6 +39,16 @@ Initialize function
 ``` js
   var sfOptions = {
     safeframeURL: '//ebimg.dk/ux/data/safeframes/index.html', // [Path from setup](#safeframe-side)
+    adtechNetworkId: '123'
+  }
+  jppolAdOps.safeframeInit(sfOptions)
+```
+
+Initialize function with prebid enabled
+``` js
+  var sfOptions = {
+    prebid: true,
+    safeframeURL: '//ebimg.dk/ux/data/safeframes/index-prebid-dac.html', // [Path from setup](#safeframe-side)
     adtechNetworkId: '123'
   }
   jppolAdOps.safeframeInit(sfOptions)
@@ -83,6 +92,19 @@ Device Object setup example
       smartphone: '123.0',
       tablet: '123'
     }
+  }
+```
+
+### prebid
+* optional [boolean]
+
+Set if prebid should be used or not
+NB! beware, remember to edit [safeframeURL](#safeframeURL) to '.../index-prebid-dac.html'
+
+setup example
+```js
+  var sfOptions = {
+    prebid: true
   }
 ```
 

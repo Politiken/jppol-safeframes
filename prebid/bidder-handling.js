@@ -85,14 +85,13 @@
         }
       }
     }
-    console.log('prebid - getBidders object', obj)
 
     /**
     ADFORM
     http://prebid.github.io/dev-docs/bidders.html#adform
     */
     if (typeof obj.adformMID !== 'undefined') {
-      console.log('prebid', 'add adform bidder with mid:', obj.adformMID, ' and USD? ', jppolAdOps.prebidSettings.isadformusd)
+      // console.log('prebid', 'add adform bidder with mid:', obj.adformMID, ' and USD? ', jppolAdOps.prebidSettings.isadformusd)
       var adformObj = {
         bidder: 'adform',
         params: {
@@ -119,7 +118,7 @@
     320x160 = 73
     */
     if (typeof obj.rubiconZone !== 'undefined' && typeof obj.rubiconSizes !== 'undefined') {
-      console.log('prebid', 'add rubicon bidder with zoneId:', obj.rubiconZone, ' and sizes ', obj.rubiconSizes)
+      // console.log('prebid', 'add rubicon bidder with zoneId:', obj.rubiconZone, ' and sizes ', obj.rubiconSizes)
       ebBidders.push({
         bidder: 'rubicon',
         params: {
@@ -136,7 +135,7 @@
     http://prebid.github.io/dev-docs/bidders.html#pubmatic
     */
     if (typeof obj.pubmaticAdSlot !== 'undefined' && typeof obj.pubmaticAdSlotArr !== 'undefined') {
-      console.log('prebid', 'add pubmatic bidder with adSlot name:', obj.pubmaticAdSlot, ' and number of adslots ', obj.pubmaticAdSlotArr.length)
+      // console.log('prebid', 'add pubmatic bidder with adSlot name:', obj.pubmaticAdSlot, ' and number of adslots ', obj.pubmaticAdSlotArr.length)
       for (var i = sizesLength; i--;) {
         var PubMaticAdslotName = obj.pubmaticAdSlotArr[i]
         ebBidders.push({
@@ -154,7 +153,7 @@
     http://prebid.org/dev-docs/bidders.html#criteo
     */
     if (typeof obj.criteoId !== 'undefined') {
-      console.log('prebid', 'add criteo bidder with adSlot name:', obj.criteoId)
+      // console.log('prebid', 'add criteo bidder with adSlot name:', obj.criteoId)
       ebBidders.push({
         bidder: 'criteo',
         params: {
@@ -168,7 +167,7 @@
     http://prebid.org/dev-docs/bidders.html#xhb
     */
     if (typeof obj.xaxis !== 'undefined') {
-      console.log('prebid', 'add xaxis bidder with adSlot name:', obj.xaxis)
+      // console.log('prebid', 'add xaxis bidder with adSlot name:', obj.xaxis)
       ebBidders.push({
         bidder: 'xhb',
         params: {
@@ -185,7 +184,7 @@
   handle specific banner position, after prebid returns data
   */
   function handleBanner (argObj) {
-    console.log('prebid', 'adtech', 'handleBanner', argObj)
+    // console.log('prebid', 'adtech', 'handleBanner', argObj)
     var placementKV = {}
     var position = argObj.elementId
     if (position === 'intext_outer') {
@@ -200,7 +199,7 @@
     */
     if (typeof argObj.adUnitCode !== 'undefined') {
       var cpmValuesToKV = argObj.cpms // jppolAdOps.settings['cpmValues']
-      console.log('prebid', 'adtech', 'winningCPM', argObj.winningCPM, 'cpmValues from secParam', cpmValuesToKV)
+      // console.log('prebid', 'adtech', 'winningCPM', argObj.winningCPM, 'cpmValues from secParam', cpmValuesToKV)
 
       if (argObj.sendXHBDeal) {
         placementKV['prebidXHB'] = 1
@@ -213,7 +212,7 @@
         }
       }
 
-      console.log('prebid', 'adtech', 'placementKV: ', placementKV, argObj.winningCPM)
+      // console.log('prebid', 'adtech', 'placementKV: ', placementKV, argObj.winningCPM)
     }
 
     /**
@@ -227,7 +226,7 @@
         alias: argObj.adtechId
       }
     }
-    console.log('prebid', 'adtech banner', bannerObj)
+    // console.log('prebid', 'adtech banner', bannerObj)
 
     if (typeof ADTECH !== 'undefined') {
       ADTECH.config.placements[argObj.adtechId] = bannerObj
@@ -236,25 +235,25 @@
         jppolAdOps.returnedFromAdtech(position, argObj.adUnitCode)
       }
 
-      console.log('prebid', 'adtech', 'bingo', 'load this now', argObj.adtechId)
+      // console.log('prebid', 'adtech', 'bingo', 'load this now', argObj.adtechId)
       ADTECH.loadAd(argObj.adtechId)
     } else {
       jppolAdOps.adQueue = jppolAdOps.adQueue || []
-      console.log('prebid', 'adtech', 'bingo', 'added to queue', argObj.adtechId)
+      // console.log('prebid', 'adtech', 'bingo', 'added to queue', argObj.adtechId)
       jppolAdOps.adQueue.push(bannerObj)
     }
   }
-  console.log('prebid', 'adtech', 'add handleBanner to jppolAdOps')
+  // console.log('prebid', 'adtech', 'add handleBanner to jppolAdOps')
 
   function biddersetup (prebidCache) {
     try {
       var adUnits = []
-      console.log('prebid', 'biddersetup prebidCache', prebidCache)
+      // console.log('prebid', 'biddersetup prebidCache', prebidCache)
       for (var key in prebidCache) {
         var element = document.getElementById(prebidCache[key].elementId)
-        console.log('prebid', 'biddersetup', element)
+        // console.log('prebid', 'biddersetup', element)
         var bidders = (typeof prebidCache[key].sizes !== 'undefined') ? getBidders(prebidCache[key]) : []
-        console.log('prebid', 'biddersetup bidders', bidders)
+        // console.log('prebid', 'biddersetup bidders', bidders)
         adUnits.push({
           code: key,
           sizes: prebidCache[key].sizes,
@@ -276,7 +275,7 @@
       //   })
       // }
       }
-      console.log('prebid', 'adUnits from biddersetup', adUnits)
+      // console.log('prebid', 'adUnits from biddersetup', adUnits)
 
       return adUnits
     } catch (err) {

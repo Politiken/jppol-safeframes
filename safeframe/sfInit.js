@@ -87,9 +87,9 @@
     try {
       if (currentScript !== null) {
         var adtechUrl = currentScript.src.split('?')[1]
-        var adtechData = $sf.ext.meta('adtechData')
+        var adtechData = $sf.ext.meta('adtechData') || '{}'
         var adtechDataObj = JSON.parse(adtechData)
-        var prebidData = $sf.ext.meta('prebidData')
+        var prebidData = $sf.ext.meta('prebidData') || '{}'
 
         if (prebidData !== '{}') {
           var prebidCache = prebidCache || {}

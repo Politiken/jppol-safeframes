@@ -172,7 +172,7 @@
     }
 
     jppolAdOps.prebidSettings = mergeObject(prebidDefault, options)
-    console.log('jppolAdOps.prebidSettings.banners', jppolAdOps.prebidSettings.banners)
+
     addBannersToPrebid(jppolAdOps.prebidSettings.banners)
   }
 
