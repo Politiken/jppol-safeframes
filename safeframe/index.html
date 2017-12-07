@@ -118,11 +118,11 @@
               $sf.ext.message('nuke')
             }
           } catch (err) {
-            debug.error('safeframes: inside safeframe', 'error', err)
+            console.error('safeframes: inside safeframe', 'error', err)
           }
         })
       } catch (err) {
-        debug.error('safeframes: inside safeframe', err)
+        console.error('safeframes: inside safeframe', err)
       }
     }(window.jppolAdOps = window.jppolAdOps || {}))
   </script>

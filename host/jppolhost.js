@@ -2,6 +2,16 @@
 
 ;(function (jppolAdOps) {
   /***
+  * Defaults
+  ***/
+  var defaultSupports = {
+    'exp-ovr': true,
+    'exp-push': false,
+    'read-cookie': false,
+    'write-cookie': false
+  }
+
+  /***
   * Helper: debug
   * Wrapping console to keep from logging when unwanted
   ***/
@@ -25,7 +35,7 @@
       }
       return returnObj
     } catch (err) {
-      debug.error('jppol-safeframes: jppolhost.js', 'mergeObj ', err)
+      console.error('jppol-safeframes: jppolhost.js', 'mergeObj ', err)
     }
   }
 
@@ -50,7 +60,7 @@
       }
       return obj
     } catch (err) {
-      debug.error('jppol-safeframes: jppolhost.js', 'adtechKvAdder', err)
+      console.error('jppol-safeframes: jppolhost.js', 'adtechKvAdder', err)
     }
   }
 
@@ -58,31 +68,12 @@
     rtb: 'false' // We revert the [true/false] value to match the expected value by adtech
   }
 
-  // <%-- criteo . key value --%>
-  if (typeof crtg_content !== 'undefined' && crtg_content !== '') {
-    adtechKv = adtechKvAdder(crtg_content, adtechKv)
-  }
-
-  // <%-- blue kai . key value --%>
-  if (typeof bk_results !== 'undefined' && typeof bk_results.campaigns !== 'undefined') {
-    adtechKv.bkcmpid = []
-    adtechKv.bkuuid = []
-    for (var i in bk_results.campaigns) {
-      adtechKv.bkcmpid.push(bk_results.campaigns[i].campaign)
-      adtechKv.bkuuid.push(bk_results.campaigns[i].bkuuid)
-    }
-
-    var metatag = document.createElement('meta')
-    metatag.name = ['WS-Custom-Targeting']
-    metatag.content = ['bkcmpid='] + adtechKv.bkcmpid.join('&') + [';bkuuid='] + adtechKv.bkuuid.join('&')
-    document.getElementsByTagName('head')[0].appendChild(metatag)
-  }
-
   var adtechKvArr = []
   for (var key in adtechKv) {
     adtechKvArr.push('kv' + key + '=' + adtechKv[key])
   }
 
+  // handle key values for old school ADTECH rendering
   function getKeyValues (placementKv) {
     try {
       var concatArray = []
@@ -98,11 +89,10 @@
       }
 
       var kvArray = adtechKvArr.concat(concatArray)
-      console.log('getKeyValues', kvArray)
       var returnValue = (kvArray.length > 0) ? kvArray.join(';') + ';' : ''
       return returnValue
     } catch (err) {
-      debug.error('jppol-safeframes: jppolhost.js', 'getKeyValues', err)
+      console.error('jppol-safeframes: jppolhost.js', 'getKeyValues', err)
     }
   }
 
@@ -135,20 +125,20 @@
       debug.log('jppol-safeframes: jppolhost.js', 'safeframe posMsg', posID, type, content)
       var nuked = false
       if (content === 'nuke' && sfOptions.fulldebug) {
-        // document.getElementById(posID + '_container').appendChild(document.createTextNode('$sf.host.nuke(' + posID + ')  - nuke allowed:' + sfOptions.allowNuke))
         debug.log(':::::: NUKED ::::::')
         debug.log('$sf.host.nuke(' + posID + ')  - nuke allowed')
         debug.log(':::::: NUKED ::::::')
       }
-      if (content === 'nuke' && sfOptions.allowNuke) { // || type === 'error') { // TODO: we should handle errors somehow
+      if (content === 'nuke' && sfOptions.allowNuke) {
         debug.log('jppol-safeframes: jppolhost.js', 'safeframe posMsg nuke el:', posID)
-        // $sf.host.nuke(posID)
+        // nuke safeframe through SafeFrame API
         nukeSafeframe(posID)
         nuked = true
       }
       debug.log('jppol-safeframes: jppolhost.js', 'safeframe wallpaper', (sfOptions.wallpaperHandler && typeof sfOptions.wallpaperSelector !== 'undefined'))
+      // handle wallpaper
       if (sfOptions.wallpaperHandler && typeof sfOptions.wallpaperSelector !== 'undefined') {
-        if (nuked === false && type === 'msg' && sfOptions.wallpaperPositionsString.indexOf(posID) !== -1 && content.indexOf('styling:') !== -1) { // (posID === 'monster' || posID === 'wallpaper')) {
+        if (nuked === false && type === 'msg' && sfOptions.wallpaperPositionsString.indexOf(posID) !== -1 && content.indexOf('styling:') !== -1) {
           var bgCSS = content.split('[styling:')[1].split(']')[0]
           var wpEl = null
           if (sfOptions.wallpaperSelector === 'body') {
@@ -164,18 +154,19 @@
         }
       }
 
+      // setup object to send to callback function from settings
       var messageObject = {
         'placement': posID,
         'type': type,
         'content': content,
         'nuked': nuked
       }
-
+      // callback function from settings
       if (typeof sfOptions.messageCallback === 'function') {
         sfOptions.messageCallback(messageObject)
       }
     } catch (err) {
-      debug.error('jppol-safeframes: jppolhost.js', 'safeframe posMsg follow error', err)
+      console.error('jppol-safeframes: jppolhost.js', 'safeframe posMsg follow error', err)
     }
   }
 
@@ -225,18 +216,22 @@
         private_data = privateDataOptions
       }
 
-      var posMeta = new $sf.host.PosMeta(shared_data, private_data_key, private_data)
-
       debug.log('jppol-safeframes: jppolhost.js', 'safeframe', 'setupFinalPos', positionData)
       if (typeof positionData.placement !== 'undefined') {
-        var posConf = new $sf.host.PosConfig({
+        // creating safeframe API PosConfig object
+        var posConfigObj = {
           id:	positionData.placement, // position ID
           dest: positionData.destID, // ID of element in parent page
           tgt: '_blank',
           w: positionData.sfWidth, // width of iframe
           h: positionData.sfHeight, // height of iframe
           z: positionData.sfZIndex
-        })
+        }
+
+        var supports = mergeObject(defaultSupports, positionData.supports)
+        posConfigObj.supports = supports
+        // console.log('posConfigObj', posConfigObj)
+        var posConf = new $sf.host.PosConfig(posConfigObj)
 
         var keyValueString = getKeyValues(positionData.keyValues)
 
@@ -244,15 +239,29 @@
         var bannerID = positionData.bannerID
         var aliasString = ''
         var type = positionData.type
+        // resetting some variables based on device
         if (sfOptions.device === 'smartphone') {
           aliasString = 'alias=' + positionData.bannerID + ';'
           bannerID = 0
           type = -1
         }
         var baseBannerSrc = (typeof sfOptions.baseBannerSrc === 'object') ? sfOptions.baseBannerSrc[sfOptions.device] : sfOptions.baseBannerSrc
+        if (sfOptions.prebid) {
+          baseBannerSrc = 'sfInit.js?'
+        }
         var networkId = (typeof sfOptions.adtechNetworkId === 'object') ? sfOptions.adtechNetworkId[sfOptions.device] : sfOptions.adtechNetworkId
-        var bannerSrc = baseBannerSrc + networkId + '/' + bannerID + '/0/' + type + '/ADTECH;loc=100;' + aliasString + 'target=_blank;key=key1+key2+key3+key4;' + keyValueString + 'grp=[group];misc=' + new Date().getTime()
+        var bannerSrc = baseBannerSrc
+        if (!sfOptions.prebid) {
+          // create old school ADTECH banner url - this is dependent on correct setup from host
+          bannerSrc += networkId + '/' + bannerID + '/0/' + type + '/ADTECH;loc=100;' + aliasString + 'target=_blank;key=key1+key2+key3+key4;' + keyValueString + 'grp=[group];'
+        }
+        bannerSrc += 'misc=' + new Date().getTime()
+
+        shared_data.bannerurl = bannerSrc
+        var posMeta = new $sf.host.PosMeta(shared_data, private_data_key, private_data)
+
         debug.log('jppol-safeframes: jppolhost.js', 'safeframe', 'so bannerSrc for:', positionData.placement, 'is', bannerSrc, 'with conf', posConf, 'and meta', posMeta, positionData)
+        // setup position in safeframe API
         var pos = new $sf.host.Position({
           id: positionData.placement,
           src: bannerSrc,
@@ -262,7 +271,7 @@
         $sf.host.render(pos)
       }
     } catch (err) {
-      debug.error('jppol-safeframes: jppolhost.js', 'jppolAdOps.setupFinalPos', err)
+      console.error('jppol-safeframes: jppolhost.js', 'jppolAdOps.setupFinalPos', err)
     }
   }
 
@@ -277,7 +286,7 @@
   var sfOptions
   var sfDefaults = {
     'device': 'desktop',
-    'safeframeURL': '//ebimg.dk/ux/data/safeframe/safeframe.html?v=9',
+    'safeframeURL': '//ebimg.dk/ux/data/safeframe/index.html',
     'baseBannerSrc': {
       'desktop': '//adserver.adtech.de/addyn/3.0/',
       'smartphone': '//a.adtech.de/addyn/3.0/',
@@ -302,6 +311,7 @@
       sfDataPrivate = (typeof privateDataOptions !== 'undefined') ? mergeObject(sfDataPrivateDefaults, privateDataOptions) : sfDataPrivateDefaults
       sfOptions.wallpaperPositionsString = (typeof sfOptions.wallpaperPositions === 'string') ? sfOptions.wallpaperPositions : sfOptions.wallpaperPositions.join(',')
       sfOptions.debug = sfOptions.fulldebug || sfOptions.debug
+
       debug.setup(sfOptions.debug)
       debug.log('jppol-safeframes: jppolhost.js', 'setting up safeframes with', options, privateDataOptions)
 
@@ -319,7 +329,7 @@
         onPosMsg: posMsg
       })
     } catch (err) {
-      debug.error('jppol-safeframes: jppolhost.js', 'jppolAdOps.safeframeInit', err)
+      console.error('jppol-safeframes: jppolhost.js', 'jppolAdOps.safeframeInit', err)
     }
   }
 }(window.jppolAdOps = window.jppolAdOps || {}))

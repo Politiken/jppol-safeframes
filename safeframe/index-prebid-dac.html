@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="Cache-Control" content="public" />
+  <meta http-equiv="Expires" content="Mon, 16 Nov 2020 00:00:01 GMT" />
+  <meta http-equiv="imagetoolbar" content="no" />
+  <meta http-equiv="imagetoolbar" content="false" />
+  <meta name="ROBOTS" content="NOINDEX" />
+  <meta name="ROBOTS" content="NOFOLLOW" />
+  <meta name="ROBOTS" content="NOARCHIVE" />
+  <meta name="ROBOTS" content="NOSNIPPET" />
+  <meta name="ROBOTS" content="NOODP " />
+  <base target="_top" />
+  <title></title>
+  <script type="text/javascript">
+
+    ;(function (jppolAdOps) {
+        jppolAdOps.eventName = 'prebidDoneEvent'
+    }(window.jppolAdOps = window.jppolAdOps || {}))
+
+    window.onerror = function() { return true; };
+  </script>
+  <script src="https://aka-cdn-ns.adtech.de/dt/common/DAC.js"></script>
+  <script src="jppolPrebid.min.js?v=7"></script>
+  <style type="text/css">
+    html, body {
+      font-family: Arial, sans-serif;
+      height: 100%;
+    }
+    #sf_body { margin:0px;padding:0px;background-color:transparent; }
+    .wrapper,
+    .sf {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .sf {
+      display: block;
+    }
+    .follow {
+      display: flex;
+      align-self: flex-start;
+      justify-content: flex-start;
+    }
+    .followleft {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+    .takeover,
+    .wrapper {
+      height: 100%;
+      width: 100%;
+    }
+    .takeover * {
+      height: 100%;
+      width: 100%;
+    }
+    .takeover iframe {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body id="sf_body">
+  <div id="adtechWallpaper" class="hidden adtechWallpaper frontpagewallpaper"></div>
+  <div class="wrapper" id="sfWrapper" style="position: relative;">
+  	<div id="sf_align" class="sf">
+  		<script src="ext.min.js?v=1" class="sf"></script>
+  	</div>
+  </div>
+  <script>
+    ;(function (jppolAdOps) {
+      try {
+
+        function fwUpdate(status) {
+          if (status === 'expanded' || status === 'collapsed') {
+            $sf.ext.message('openViewportOverlay:' + status)
+          }
+        }
+        console.log('supports', $sf.ext.supports())
+        var debug = jppolAdOps.debug
+        debug.setup(location.href.indexOf('debug=true') !== -1)
+
+        var position = $sf.ext.meta('banner_position')
+
+        if (position.indexOf('mega') !== -1) {
+          $sf.ext.register($sf.ext.geom().self.w, $sf.ext.geom().self.h, fwUpdate)
+        }
+
+        var sf_align = document.getElementById('sf_align')
+        sf_align.classList.add(position)
+        sf_align.parentNode.classList.add(position)
+
+      } catch (err) {
+        console.error('safeframes: inside safeframe', err)
+      }
+    }(window.jppolAdOps = window.jppolAdOps || {}))
+  </script>
+</body>
+</html>
