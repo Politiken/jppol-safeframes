@@ -62,7 +62,7 @@
             if (typeof prebidElement !== 'undefined') {
               var prebidType = prebidElement.className
               prebidElement.className = ''
-              jppolAdOps.renderPrebidAd('currentBannerForPrebid', prebidType, prebidElement)
+              bannerHeight = jppolAdOps.renderPrebidAd('currentBannerForPrebid', prebidType, prebidElement)
               loadedMessage += '|w' + bannerWidth + '|h' + bannerHeight
               $sf.ext.message(loadedMessage)
             } else {

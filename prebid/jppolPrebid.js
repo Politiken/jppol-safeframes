@@ -156,6 +156,9 @@
         newIframe.addEventListener('load', function () {
           iframeDoc.body.setAttribute('style', 'margin:0;padding:0;')
         }, false)
+
+        // return height of banner to caller
+        return size[1]
       }
     } catch (err) {
       console.error('sfPrebid', 'renderPrebidAd', err)
