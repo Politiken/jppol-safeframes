@@ -71,7 +71,7 @@
 
         var debug = jppolAdOps.debug
         debug.setup(location.href.indexOf('debug=true') !== -1)
-        
+
         var position = $sf.ext.meta('banner_position')
         if (position === 'intextbanner') {
             $sf.ext.register(930, 180, status_update)
@@ -89,9 +89,10 @@
               debug.log('safeframes: inside safeframe', 'we got a banner', position)
               setTimeout(function () {
                 var loadedMessage = 'safeframeloaded';
+
+                // wallpaper check
                 var stylingAttrCustom = document.getElementById('adtechWallpaper').getAttribute('style');
                 var stylingAttrBody = document.body.getAttribute('style') || 'background:' + window.getComputedStyle(document.body,null).getPropertyValue("background") + ';';
-                
                 // TODO: make better check, since "stylingAttrBody" almost always contains styling
                 if (stylingAttrCustom || (stylingAttrBody && stylingAttrBody.match(/url\((.*?)\)/))) {
                   debug.log('safeframes: inside safeframe','wallpaper style:', stylingAttrBody, '||', stylingAttrCustom);
@@ -101,6 +102,16 @@
                     loadedMessage += '[styling:' + stylingAttrBody + ']';
                   }
                   debug.log('safeframes: inside safeframe', 'got wallpaper from', position, stylingAttrCustom, stylingAttrBody);
+                }
+
+                // interscroller check
+                var interscrollerDiv = document.getElementsByClassName('adtech-interscroller')[0];
+                if (interscrollerDiv) {
+                  var interscrollerStyle = interscrollerDiv.querySelectorAll('*[id^="ADTECH"]')[0].getAttribute('style');
+                  if (interscrollerStyle) {
+                    debug.log('safeframes: inside safeframe','interscroller style:', interscrollerStyle);
+                    loadedMessage += '';
+                  }
                 }
 
                 if (sf_align.querySelector('.prebidPlaceholder') !== null) {
