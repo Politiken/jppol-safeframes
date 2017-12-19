@@ -98,8 +98,10 @@
           prebidCache['currentBannerForPrebid'].elementId = 'sfWrapper'
           prebidCache['currentBannerForPrebid'].destID = 'sf_align'
 
+          console.log('device: ', prebidData.device, prebidCache['currentBannerForPrebid'].device)
+
           jppolAdOps.setupPrebid({
-            device: prebidData.device,
+            device: prebidCache['currentBannerForPrebid'].device,
             debug: false,
             timeout: prebidCache['currentBannerForPrebid'].timeout,
             cpmValues: prebidCache['currentBannerForPrebid'].cpmValues,

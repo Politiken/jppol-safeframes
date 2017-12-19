@@ -61,10 +61,10 @@
   jppolAdOps.triggerEvent = triggerEvent
   jppolAdOps.prebidCache = {}
 
-  function addBannersToPrebid (banners) {
+  function addBannersToPrebid (banners, device) {
     var ebpc = banners
     pbjs.que.push(function () {
-      var adUnits = jppolAdOps.biddersetup(banners)
+      var adUnits = jppolAdOps.biddersetup(banners, device)
 
       jppolAdOps.prebidDone = {
         'status': 'undone'
@@ -176,7 +176,7 @@
 
     jppolAdOps.prebidSettings = mergeObject(prebidDefault, options)
 
-    addBannersToPrebid(jppolAdOps.prebidSettings.banners)
+    addBannersToPrebid(jppolAdOps.prebidSettings.banners, jppolAdOps.prebidSettings.device)
   }
 
   jppolAdOps.addBannersToPrebid = addBannersToPrebid
