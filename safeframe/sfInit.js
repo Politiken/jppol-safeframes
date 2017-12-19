@@ -99,6 +99,7 @@
           prebidCache['currentBannerForPrebid'].destID = 'sf_align'
 
           jppolAdOps.setupPrebid({
+            device: prebidData.device,
             debug: false,
             timeout: prebidCache['currentBannerForPrebid'].timeout,
             cpmValues: prebidCache['currentBannerForPrebid'].cpmValues,

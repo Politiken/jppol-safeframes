@@ -119,11 +119,23 @@
     */
     if (typeof obj.rubiconZone !== 'undefined' && typeof obj.rubiconSizes !== 'undefined') {
       // console.log('prebid', 'add rubicon bidder with zoneId:', obj.rubiconZone, ' and sizes ', obj.rubiconSizes)
+      var rubiconSiteID = 20183
+      switch (jppolAdOps.device) {
+        case 'smartphone':
+          rubiconSiteID = 32382
+          break
+        case 'tablet':
+          rubiconSiteID = 43742
+          break
+        default:
+          rubiconSiteID = 20183
+      }
+
       ebBidders.push({
         bidder: 'rubicon',
         params: {
           accountId: 10093,
-          siteId: 23382,
+          siteId: rubiconSiteID,
           zoneId: obj.rubiconZone,
           sizes: obj.rubiconSizes
         }
