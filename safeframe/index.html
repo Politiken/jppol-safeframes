@@ -109,8 +109,7 @@
                 if (interscrollerDiv) {
                   var interscrollerStyle = interscrollerDiv.querySelectorAll('*[id^="ADTECH"]')[0].getAttribute('style');
                   if (interscrollerStyle) {
-                    debug.log('safeframes: inside safeframe','interscroller style:', interscrollerStyle);
-                    loadedMessage += '';
+                    loadedMessage += '[interscrollerStyle:' + interscrollerStyle + ']';
                   }
                 }
 
