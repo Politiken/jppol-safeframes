@@ -62,7 +62,7 @@
             if (typeof prebidElement !== 'undefined') {
               var prebidType = prebidElement.className
               prebidElement.className = ''
-              jppolAdOps.renderPrebidAd('currentBannerForPrebid', prebidType, prebidElement)
+              bannerHeight = jppolAdOps.renderPrebidAd('currentBannerForPrebid', prebidType, prebidElement)
               loadedMessage += '|w' + bannerWidth + '|h' + bannerHeight
               $sf.ext.message(loadedMessage)
             } else {
@@ -98,7 +98,10 @@
           prebidCache['currentBannerForPrebid'].elementId = 'sfWrapper'
           prebidCache['currentBannerForPrebid'].destID = 'sf_align'
 
+          console.log('device: ', prebidData.device, prebidCache['currentBannerForPrebid'].device)
+
           jppolAdOps.setupPrebid({
+            device: prebidCache['currentBannerForPrebid'].device,
             debug: false,
             timeout: prebidCache['currentBannerForPrebid'].timeout,
             cpmValues: prebidCache['currentBannerForPrebid'].cpmValues,

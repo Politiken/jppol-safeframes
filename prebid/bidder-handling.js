@@ -64,7 +64,7 @@
   * # getBidders
   * create bidder data to send to prebid
   **/
-  function getBidders (obj) {
+  function getBidders (obj, device) {
     var ebBidders = []
 
     var sizes = obj.sizes
@@ -119,11 +119,23 @@
     */
     if (typeof obj.rubiconZone !== 'undefined' && typeof obj.rubiconSizes !== 'undefined') {
       // console.log('prebid', 'add rubicon bidder with zoneId:', obj.rubiconZone, ' and sizes ', obj.rubiconSizes)
+      var rubiconSiteID = 20183
+      switch (device) {
+        case 'smartphone':
+          rubiconSiteID = 32382
+          break
+        case 'tablet':
+          rubiconSiteID = 43742
+          break
+        default:
+          rubiconSiteID = 20183
+      }
+
       ebBidders.push({
         bidder: 'rubicon',
         params: {
           accountId: 10093,
-          siteId: 23382,
+          siteId: rubiconSiteID,
           zoneId: obj.rubiconZone,
           sizes: obj.rubiconSizes
         }
@@ -245,14 +257,14 @@
   }
   // console.log('prebid', 'adtech', 'add handleBanner to jppolAdOps')
 
-  function biddersetup (prebidCache) {
+  function biddersetup (prebidCache, device) {
     try {
       var adUnits = []
       // console.log('prebid', 'biddersetup prebidCache', prebidCache)
       for (var key in prebidCache) {
         var element = document.getElementById(prebidCache[key].elementId)
         // console.log('prebid', 'biddersetup', element)
-        var bidders = (typeof prebidCache[key].sizes !== 'undefined') ? getBidders(prebidCache[key]) : []
+        var bidders = (typeof prebidCache[key].sizes !== 'undefined') ? getBidders(prebidCache[key], device) : []
         // console.log('prebid', 'biddersetup bidders', bidders)
         adUnits.push({
           code: key,

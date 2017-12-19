@@ -1,6 +1,6 @@
 {
   "name": "@ekstra-bladet/jppol-safeframes",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "JPPol shared safeframes implementation",
   "main": "index.js",
   "dependencies": {

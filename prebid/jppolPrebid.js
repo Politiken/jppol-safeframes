@@ -61,10 +61,10 @@
   jppolAdOps.triggerEvent = triggerEvent
   jppolAdOps.prebidCache = {}
 
-  function addBannersToPrebid (banners) {
+  function addBannersToPrebid (banners, device) {
     var ebpc = banners
     pbjs.que.push(function () {
-      var adUnits = jppolAdOps.biddersetup(banners)
+      var adUnits = jppolAdOps.biddersetup(banners, device)
 
       jppolAdOps.prebidDone = {
         'status': 'undone'
@@ -156,6 +156,9 @@
         newIframe.addEventListener('load', function () {
           iframeDoc.body.setAttribute('style', 'margin:0;padding:0;')
         }, false)
+
+        // return height of banner to caller
+        return size[1]
       }
     } catch (err) {
       console.error('sfPrebid', 'renderPrebidAd', err)
@@ -173,7 +176,7 @@
 
     jppolAdOps.prebidSettings = mergeObject(prebidDefault, options)
 
-    addBannersToPrebid(jppolAdOps.prebidSettings.banners)
+    addBannersToPrebid(jppolAdOps.prebidSettings.banners, jppolAdOps.prebidSettings.device)
   }
 
   jppolAdOps.addBannersToPrebid = addBannersToPrebid
