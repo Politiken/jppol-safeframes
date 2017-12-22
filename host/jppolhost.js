@@ -141,6 +141,10 @@
         if (nuked === false && type === 'msg' && sfOptions.wallpaperPositionsString.indexOf(posID) !== -1 && content.indexOf('styling:') !== -1) {
           var bgCSS = content.split('[styling:')[1].split(']')[0]
           var wpEl = null
+
+          // set data-attribute for later reference
+          document.documentElement.setAttribute('data-wallpaper-style', 'true');
+
           if (sfOptions.wallpaperSelector === 'body') {
             wpEl = document.body
           } else if (sfOptions.wallpaperSelector.match(/[#.]/)) {
@@ -153,6 +157,38 @@
           }
         }
       }
+
+      // handle interscroller
+      // if (nuked === false && type === 'msg' && sfOptions.interscrollerHandler && content.indexOf('interscrollerStyle:') !== -1) {
+      //   var interscrollerPositionsString = (typeof sfOptions.interscrollerPositions === 'string') ? sfOptions.interscrollerPositions : sfOptions.interscrollerPositions.join(',');
+      //   if (interscrollerPositionsString.indexOf(posID) !== -1) {
+      //     var interscrollerStyle = content.split('[interscrollerStyle:')[1].split(']')[0];
+      //     if (interscrollerStyle) {
+      //       // set data-attribute for later reference
+      //       document.documentElement.setAttribute('data-interscroller-style', 'true');
+      //
+      //       // create div elements
+      //       var interscrollerWrapper = document.createElement('div');
+      //       interscrollerWrapper.style.position = 'absolute';
+      //       interscrollerWrapper.style.height = '100vh';
+      //       interscrollerWrapper.style.width = '100%';
+      //       interscrollerWrapper.style.clip = 'rect(auto auto auto auto)';
+      //       interscrollerWrapper.style.verticalAlign = 'initial';
+      //       interscrollerWrapper.style.overflow = 'hidden';
+      //
+      //       var interscrollerDiv = document.createElement('div');
+      //       interscrollerWrapper.append(interscrollerDiv);
+      //
+      //        // add interscroller class to div
+      //        // TODO: find a better method
+      //       ad.parentNode.parentNode.parentNode.classList.add('ad--interscroller');
+      //
+      //       // append and set style
+      //       ad.parentNode.append(interscrollerWrapper);
+      //       interscrollerDiv.setAttribute('style', interscrollerStyle);
+      //     }
+      //   }
+      // }
 
       // setup object to send to callback function from settings
       var messageObject = {
@@ -300,6 +336,8 @@
     'wallpaperHandler': false,
     'wallpaperSelector': 'adtechWallpaper',
     'wallpaperPositions': ['monster', 'wallpaper'],
+    'interscrollerHandler': false,
+    'interscrollerPositions': [],
     'allowNuke': true,
     'debug': false, // reset in init function if fulldebug is set to true
     'fulldebug': false

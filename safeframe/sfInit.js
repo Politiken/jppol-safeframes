@@ -45,7 +45,7 @@
             var loadedMessage = 'safeframeloaded'
 
             // Handle loaded wallpaper
-            if (position === 'monster' || position === 'wallpaper') {
+            if (position === 'monster' || position === 'wallpaper' || position === 'megaboard') {
               var stylingAttrCustom = document.getElementById('adtechWallpaper').getAttribute('style')
               var stylingAttrBody = document.body.getAttribute('style') || 'background:' + window.getComputedStyle(document.body, null).getPropertyValue('background') + ';'
               if (stylingAttrCustom !== null && stylingAttrCustom.match(/url\((.*?)\)/)) {
@@ -54,6 +54,18 @@
                 loadedMessage += '[styling:' + stylingAttrBody + ']'
               }
             }
+
+            // handle interscroller
+            if (position === 'monster' || position === 'wallpaper' || position === 'megaboard') {
+              var interscrollerDiv = document.getElementsByClassName('adtech-interscroller')[0];
+              if (interscrollerDiv) {
+                var interscrollerStyle = interscrollerDiv.querySelectorAll('*[id^="ADTECH"]')[0].getAttribute('style');
+                if (interscrollerStyle) {
+                  loadedMessage += '[interscrollerStyle:' + interscrollerStyle + ']';
+                }
+              }
+            }
+
 
             var prebidElement = sf_align.querySelectorAll('.prebidPlaceholder, .prebidPlaceholder_xhb')[0]
             // Tell host about bannersize
@@ -97,8 +109,6 @@
           prebidCache['currentBannerForPrebid'] = JSON.parse(prebidData)
           prebidCache['currentBannerForPrebid'].elementId = 'sfWrapper'
           prebidCache['currentBannerForPrebid'].destID = 'sf_align'
-
-          console.log('device: ', prebidData.device, prebidCache['currentBannerForPrebid'].device)
 
           jppolAdOps.setupPrebid({
             device: prebidCache['currentBannerForPrebid'].device,
